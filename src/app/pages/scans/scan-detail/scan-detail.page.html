@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Scan</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/scans"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (!dataAvailable) {
+    <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+  }
+
+  @if (dataAvailable) {
+    <cdk-virtual-scroll-viewport #viewPort itemSize="54" minBufferPx="900" maxBufferPx="1350">
+      <ion-list class="ion-no-padding">
+        <ion-list-header color="primary">
+          <ion-label>Scan summary</ion-label>
+          <ion-button fill="solid" color="secondary">Edit</ion-button>
+          <ion-button fill="solid" color="danger" (click)="confirmDelete.open()">Delete</ion-button>
+        </ion-list-header>
+        <app-scan-summary [model]="scan" [complete]="false"></app-scan-summary>
+        <ion-list-header color="primary">
+          <ion-label>Current stream</ion-label>
+        </ion-list-header>
+        @if (!anyStreamData) {
+          <ion-item lines="none">
+            <ion-img src="/assets/images/nodata.png" class="align-centre img-12w"></ion-img>
+          </ion-item>
+        }
+        <ion-item *cdkVirtualFor="let security of viewDataStream">
+          <ion-label>{{security.code}}
+            <p>{{security.name}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </cdk-virtual-scroll-viewport>
+    <app-confirm-delete #confirmDelete description="the Scan called '{{scan.name}}'" (deleteSelected)="handleDelete()"></app-confirm-delete>
+  }
+
+</ion-content>

@@ -1,0 +1,46 @@
+.nested-grid {
+    padding: 0;
+}
+
+.full-skeleton {
+    height: 100%;
+}
+
+.stock-card {
+    padding: 1px 2px;
+}
+
+.increase {
+    color: var(--ion-color-success-tint);
+}
+
+.decrease {
+    color: var(--ion-color-danger-tint);
+}
+
+.auction-heading {
+    color: var(--ion-color-tertiary);
+    font-size: x-small !important;
+    margin: 0;
+}
+
+.small-margin {
+    margin-right: 8px;
+}
+
+.lapel {
+    ion-badge {
+        position: absolute;
+        top: 34px;
+        right: 5px;
+        font-size: x-small !important;
+    }
+}
+
+.select-right {
+    max-width: 100%;
+    width: 80%;
+    height: 25px;
+    margin-left: 10%;
+    margin-right: 10%;
+}

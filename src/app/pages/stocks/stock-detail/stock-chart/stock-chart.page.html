@@ -1,0 +1,12 @@
+<!-- <ion-fab vertical="top" horizontal="start" slot="fixed">
+<ion-fab-button color="primary">
+  <ion-icon name="construct-sharp" (click)="presentChartOptionsModal()"></ion-icon>
+</ion-fab-button>
+</ion-fab> -->
+
+<ion-content class="full-size chart-content">
+  <div #chartPlaceholder class="full-size"></div>
+  @if (waitingToLoad) {
+    <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+  }
+</ion-content>

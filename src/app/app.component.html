@@ -1,0 +1,83 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu [disabled]="!showMenu" contentId="main-content" type="overlay" swipeGesture="true" maxEdgeStart="10">
+      <ion-content>
+        <ion-list id="primary-action-list">
+          @if (nonProduction) {
+            <ion-item class="text-centre" lines="none" color="tertiary">
+              <ion-label>Non-Production</ion-label>
+            </ion-item>
+          }
+
+          <ion-item>
+            <ion-grid>
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="auto">
+                  @if (hasBrandingLogo) {
+                    <ion-img class="brandingLogo" [src]="brandingLogo"></ion-img>
+                  }
+                  @if (!hasBrandingLogo) {
+                    <ion-text color="tertiary" class="branding-typeface">
+                      <h1 class=""><strong>{{brandingAppName}}</strong></h1>
+                    </ion-text>
+                  }
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="auto">
+                  <ion-avatar>
+                    <img [src]="userGravatarLink" alt="gravitar">
+                  </ion-avatar>
+                </ion-col>
+              </ion-row>
+              @if (beta) {
+                <ion-row class="ion-justify-content-center">
+                  <ion-col size="auto">
+                    Beta
+                  </ion-col>
+                </ion-row>
+              }
+              @if (fullname !== '') {
+                <ion-row class="ion-justify-content-center">
+                  <ion-col size="auto">
+                    <ion-label>{{fullname}}</ion-label>
+                  </ion-col>
+                </ion-row>
+              }
+              @if (userEmail !== '') {
+                <ion-row class="ion-justify-content-center">
+                  <ion-col size="auto">
+                    <ion-label class="text-xsmall" color="medium">{{userEmail}}</ion-label>
+                  </ion-col>
+                </ion-row>
+              }
+            </ion-grid>
+          </ion-item>
+
+          @if (installationAvailable) {
+            <ion-item class="ion-justify-content-center" lines="none">
+              <ion-chip color="tertiary" outline="true" class="align-centre" (click)="runInstall()" tappable>
+                <ion-icon name="cloud-download-outline"></ion-icon>
+                <ion-label>Install application</ion-label>
+              </ion-chip>
+            </ion-item>
+          }
+
+          @for (p of appPages; track p; let i = $index) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          }
+
+        </ion-list>
+      </ion-content>
+
+    </ion-menu>
+
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

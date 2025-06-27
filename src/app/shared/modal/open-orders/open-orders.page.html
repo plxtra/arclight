@@ -1,0 +1,83 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-title class="title-typeface">Open orders</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" fill="solid" (click)="dismissModal()">Close
+        <ion-icon slot="end" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <cdk-virtual-scroll-viewport itemSize="54" minBufferPx="900" maxBufferPx="1350">
+    <ion-list>
+      <ion-accordion-group (ionChange)="selectOrderId($event)">
+        <ion-accordion *cdkVirtualFor="let openOrder of openOrders" [value]="openOrder.orderId">
+          <ion-item slot="header">
+            <ion-label>
+              <p>{{openOrder.accountIdDisplay}} - {{openOrder.accountName}}</p>
+            {{openOrder.side}} {{openOrder.placedQuantityDisplay}} {{openOrder.code}}</ion-label>
+          </ion-item>
+          <ion-card slot="content" color="secondary">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6" class="text-xxlarge">{{openOrder.side}}</ion-col>
+                <ion-col size="6" class="text-right text-large">
+                  {{openOrder.accountIdDisplay}}
+                  <p class="text-xsmall">{{openOrder.accountName}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-label>
+                    <ion-label class="text-large ion-padding-end">{{openOrder.code}}</ion-label>
+                    {{openOrder.name}}
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-end">
+                <ion-col size="3" class="">Placed:</ion-col>
+                <ion-col size="3" class="text-right text-xlarge">{{openOrder.placedQuantityDisplay}}</ion-col>
+                <ion-col size="2" class="text-centre">at</ion-col>
+                <ion-col size="3" class="text-right text-xlarge">{{openOrder.placedPriceDisplay}}</ion-col>
+              </ion-row>
+              @if (openOrder.tradedQuantity) {
+                <ion-row class="ion-align-items-end border-1 ion-margin-top">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size="3" class="">Traded:</ion-col>
+                      <ion-col size="3" class="text-right">{{openOrder.tradedQuantityDisplay}}</ion-col>
+                      <ion-col size="2" class="text-centre">at</ion-col>
+                      <ion-col size="3" class="text-right">{{openOrder.tradedPriceDisplay}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="3" class="">Untraded:</ion-col>
+                      <ion-col size="3" class="text-right">{{openOrder.untradedQuantityDisplay}}</ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-row>
+              }
+              <ion-row class="ion-padding-top">
+                <ion-col size="4" class="">
+                  <ion-button fill="solid" expand="block" (click)="modifySelectedOrder()" [disabled]="!openOrder.canAmend">
+                    Amend
+                  </ion-button>
+                </ion-col>
+                <ion-col size="4" push="4" class="text-right">
+                  <ion-button fill="solid" color="danger" expand="block" (click)="cancelSelectedOrder()" [disabled]="!openOrder.canCancel">
+                    Cancel
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6" class="text-xsmall">Created: {{openOrder.createdDisplay}}</ion-col>
+                <ion-col size="6" class="text-right text-xsmall">Order id: {{openOrder.orderId}}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-list>
+  </cdk-virtual-scroll-viewport>
+</ion-content>

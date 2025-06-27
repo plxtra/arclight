@@ -1,0 +1,53 @@
+<ion-content fullscreen>
+  <ion-grid class="viewport-v100">
+    <ion-row class="viewport-v10">
+      <ion-col size="auto" class="align-right">
+        @if (installAvailable) {
+          <ion-chip color="tertiary" outline="true" (click)="runInstall()" tappable>
+            <ion-icon name="cloud-download-outline"></ion-icon>
+            <ion-label>Install application</ion-label>
+          </ion-chip>
+        }
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="viewport-v15">
+      <ion-col size="auto"></ion-col>
+    </ion-row>
+
+    <ion-row class="viewport-v20 ion-align-items-end">
+      <ion-col size="auto" class="align-centre">
+        <ion-img class="viewport-v15" [src]="brandingImageUrl"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row class="viewport-v10 ion-align-items-end">
+      <ion-col size="auto" class="align-centre">
+        <ion-text color="tertiary" class="branding-typeface">
+          <h1 class="small-top-margin"><strong>Arclight</strong></h1>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="viewport-v15 ion-align-items-end">
+      <ion-col size="auto" class="align-centre">
+        <ion-button class="viewport-h50" [routerLink]="'/stocks'" color="secondary">Login</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="viewport-v10  ion-align-items-center">
+      <ion-col size="auto" class="align-centre">
+        @if (nonProduction) {
+          <ion-text color="tertiary">Non-Production</ion-text>
+        }
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="viewport-v10 ion-align-items-end">
+      <ion-col size="auto" class="align-centre">
+        <ion-text color="medium">MotifMarkets Pty Ltd</ion-text>
+      </ion-col>
+      <ion-col size="auto" class="align-centre">
+        <ion-text color="medium">v{{appVersion}}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,62 @@
+// segments
+.new-order-segment {
+    min-height: 48px;
+}
+
+.new-order-buy {
+    --border-color: var(--ion-color-danger);
+    --border-width: 1px;
+    --color: var(--ion-color-danger);
+    --color-checked: var(--ion-color-danger-contrast);
+    --background-checked: var(--ion-color-danger);
+    --indicator-color: transparent;
+}
+
+.new-order-sell {
+    --border-color: var(--ion-color-success);
+    --border-width: 1px;
+    --color: var(--ion-color-success);
+    --color-checked: var(--ion-color-success-contrast);
+    --background-checked: var(--ion-color-success);
+    --indicator-color: transparent;
+}
+
+.new-order-exotic {
+    --border-color: var(--ion-color-tertiary);
+    --border-width: 1px;
+    --color: var(--ion-color-tertiary);
+    --color-checked: var(--ion-color-tertiary-contrast);
+    --background-checked: var(--ion-color-tertiary);
+    --indicator-color: transparent;
+}
+
+ion-item {
+    --highlight-color-focused: var(--ion-color-primary);
+    --highlight-color-invalid: var(--ion-color-primary);
+    --highlight-color-valid: var(--ion-color-primary);
+    --highlight-height: 2px;
+    --background-focused: var(--ion-color-primary);
+}
+
+ion-datetime {
+    height: auto;
+    width: auto;
+    max-width: 350px;
+}
+
+ion-modal {
+    --width: 290px;
+    --height: 382px;
+    --border-radius: 8px;
+}
+
+ion-modal ion-datetime {
+    color: var(--ion-text-color);
+    height: 382px;
+}
+
+.wide-select {
+    min-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}

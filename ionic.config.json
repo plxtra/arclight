@@ -1,0 +1,10 @@
+{
+    "defaultProject": "Paritech.Arclight.Spa",
+    "projects": {
+        "Paritech.Arclight.Spa": {
+            "name": "paitech-arclight",
+            "integrations": {},
+            "type": "angular"
+        }
+    }
+}

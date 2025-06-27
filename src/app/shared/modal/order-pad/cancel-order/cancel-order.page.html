@@ -1,0 +1,258 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-title class="title-typeface">Cancel an order</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" fill="solid" (click)="dismissModal()">Close
+        <ion-icon slot="end" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+@if (!dataAvailableOrder) {
+  <ion-content>
+    <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+  </ion-content>
+}
+
+@if (dataAvailableOrder && isSheetActive(1)) {
+  <ion-content>
+    <ion-list class="ion-no-padding">
+      <ion-item [color]="sideColour" class="text-centre text-xlarge">
+        {{orderDetails?.side}}
+        <ion-label class="text-xsmall text-right ion-padding-end">{{orderDetails?.orderId}}</ion-label>
+      </ion-item>
+      <app-standard-security-control [securityCode]="tradingSymbol?.code" [showCodeNamePrice]="true" [showAuction]="false" [showExtended]="false" [showBest]="true" [showOhlc]="false">
+      </app-standard-security-control>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Trading account</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label color="primary" class="text-large">
+                {{orderDetails?.accountIdDisplay}}
+                <p color="medium" class="text-xsmall">{{orderDetails?.accountName}}</p>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Route</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label>
+                {{orderDetails?.route}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Order type</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label>
+                {{orderDetails?.orderType}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Time in force</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="5">
+              <ion-label>
+                {{orderDetails?.timeInForce}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label class="">
+                <p class="field-heading">Expiry date</p>
+                {{orderDetails?.expiryDateDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Placed quantity</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="5">
+              <ion-label color="primary" class="text-xlarge">
+                {{orderDetails?.placedQuantityDisplay}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label class="">
+                <p class="field-heading">Untraded</p>
+                {{orderDetails?.untradedQuantityDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Placed price</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label color="primary" class="text-xlarge">
+                {{orderDetails?.placedPriceDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Traded</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="4">
+              <ion-label class="">
+                {{orderDetails?.tradedQuantityDisplay}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="1">
+              <ion-label class="text-xsmall">
+                &#64;
+              </ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label class="">
+                {{orderDetails?.tradedPriceDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+}
+
+@if (dataAvailableOrder && isSheetActive(2)) {
+  <ion-content>
+    <ion-list>
+      <ion-item [color]="sideColour" class="text-xlarge">
+        {{orderDetails?.side}}
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Status</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="7">
+              <ion-label>
+                <p class="text-xlarge" [ngClass]="{'text-bad':placedStatusBad,'text-good':placedStatusGood}">{{placedStatus}}</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="1" class="text-right">
+              @if (placedStatusGood) {
+                <ion-icon class="ion-no-margin text-xlarge" name="checkmark-done" color="success"></ion-icon>
+              }
+              @if (placedStatusBad) {
+                <ion-icon class="ion-no-margin text-xlarge" name="close" color="danger"></ion-icon>
+              }
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Order ID</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label color="primary">
+                {{placedOrderId}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          @for (errorText of placeOrderRequestErrors; track errorText; let firstRec = $first; let stepNum = $index) {
+            <ion-row class="ion-align-items-center">
+              <ion-col size="4">
+                @if (firstRec) {
+                  <ion-label>
+                    <p class="field-heading">Actions</p>
+                  </ion-label>
+                }
+              </ion-col>
+              <ion-col size="8">
+                <ion-label color="medium">
+                  <p class="ion-no-margin text-small">{{stepNum+1}}. {{errorText}}</p>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          }
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+}
+
+<ion-footer>
+  @if (dataAvailableOrder && isSheetActive(1)) {
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color="danger" fill="solid" (click)="nextSheet()" [disabled]="anyErrors">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Cancel
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (dataAvailableOrder && isSheetActive(2)) {
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color="secondary" fill="solid" (click)="dismissModal()">
+          <ion-icon slot="end" name="close"></ion-icon>
+          Close
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+</ion-footer>

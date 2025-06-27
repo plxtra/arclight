@@ -1,0 +1,544 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-title class="title-typeface">Place an order</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" fill="solid" (click)="dismissModal()">Close
+        <ion-icon slot="end" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+@if (isSheetActive(1)) {
+  <ion-content>
+    <ion-list class="ion-no-padding">
+      <ion-segment class="new-order-segment" [(ngModel)]="linkSide">
+        @for (side of availableSides; track side) {
+          <ion-segment-button [value]="side.name" class="" [class]="sideSegmentStyle(side.name)">
+            <ion-label>{{side.display}}</ion-label>
+          </ion-segment-button>
+        }
+      </ion-segment>
+      <ion-item (click)="lookupTradingAccount()" detail="false" button="true">
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Trading account</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              @if (highlightingErrorText && !orderPad.account) {
+                <ion-badge color="danger" class="floating-bubble-0">No trading account selected</ion-badge>
+              }
+              @if (orderPad.account) {
+                <ion-label color="primary" class="text-large">
+                  {{orderPad.account.id.display}}
+                  <p color="medium" class="text-xsmall">{{orderPad.account.name}}</p>
+                </ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton input-error"></ion-skeleton-text>
+              }
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-icon slot="end" name="ellipsis-horizontal"></ion-icon>
+      </ion-item>
+      <ion-item (click)="lookupSymbol()" detail="false" button="true">
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Symbol</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              @if (highlightingErrorText && !tradingSymbol) {
+                <ion-badge color="danger" class="floating-bubble-0">no symbol selected</ion-badge>
+              }
+              @if (tradingSymbol) {
+                <ion-label color="primary" class="text-large">
+                  {{tradingSymbol.code}}
+                  <p color="medium" class="text-xsmall">{{tradingSymbol.name}}</p>
+                </ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton input-error"></ion-skeleton-text>
+              }
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-icon slot="end" name="ellipsis-horizontal"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="field-heading">Route</p>
+        </ion-label>
+        <ion-select class="wide-select" interface="popover" placeholder="Market" [(ngModel)]="tradingMarket" class="fit-content">
+          @for (market of availableTradingMarkets; track market) {
+            <ion-select-option [value]="market">{{market.display}}</ion-select-option>
+          }
+        </ion-select>
+        <ion-icon slot="end" color="medium" name="checkmark"></ion-icon>
+      </ion-item>
+      <ion-item-divider color="primary">
+        <ion-label>Order scope</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>
+          <p class="field-heading">Type</p>
+        </ion-label>
+        @if (highlightingErrorText && linkOrderTypeError) {
+          <ion-badge color="danger" class="floating-bubble-1">{{linkOrderTypeErrorMessage}}</ion-badge>
+        }
+        <ion-select interface="popover" placeholder="Select One" [(ngModel)]="linkOrderType" class="fit-content">
+          @for (orderType of availableOrderTypes; track orderType) {
+            <ion-select-option [value]="orderType.name">{{orderType.display}}</ion-select-option>
+          }
+        </ion-select>
+        <ion-icon slot="end" color="medium" name="checkmark"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="field-heading">Time in force</p>
+        </ion-label>
+        @if (highlightingErrorText && linkTimeInForceError) {
+          <ion-badge color="danger" class="floating-bubble-1">{{linkTimeInForceErrorMessage}}</ion-badge>
+        }
+        <ion-select interface="popover" placeholder="Select One" [(ngModel)]="linkTimeInForce" class="fit-content">
+          @for (timeInForce of availableTimeInForces; track timeInForce) {
+            <ion-select-option [value]="timeInForce.name">{{timeInForce.display}}</ion-select-option>
+          }
+        </ion-select>
+        <ion-icon slot="end" color="medium" name="checkmark"></ion-icon>
+      </ion-item>
+      <ion-item id="open-date-modal" [disabled]="linkExpiryDateDisabled">
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="6">
+              <ion-label>
+                <p class="field-heading">Expiry date</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="6">
+              @if (highlightingErrorText && linkExpiryDateError) {
+                <ion-badge color="danger" class="floating-bubble-0">{{linkExpiryDateErrorMessage}}</ion-badge>
+              }
+              <ion-input readonly="true" placeholder="Last day of order" type="text" [ngModel]="linkExpiryDateFormatted" [ngClass]="{'input-error': linkExpiryDateError}" class="input-right"></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        @if (linkExpiryDateError) {
+          <ion-icon slot="end" color="warning" name="alert-circle"></ion-icon>
+        }
+        @if (!linkExpiryDateError) {
+          <ion-icon slot="end" color="medium" name="checkmark"></ion-icon>
+        }
+        <ion-modal trigger="open-date-modal">
+          <ng-template>
+            <ion-datetime presentation="date" color="primary" showDefaultButtons="true" [(ngModel)]="linkExpiryDate" [min]="today8601"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <ion-item-divider color="primary">
+        <ion-label>Quantity and price</ion-label>
+      </ion-item-divider>
+      <app-standard-security-control [securityCode]="tradingSymbol?.code" [showCodeNamePrice]="false" [showAuction]="false" [showExtended]="false" [showBest]="true" [showOhlc]="false">
+      </app-standard-security-control>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="3">
+              <ion-label>
+                <p class="field-heading">Quantity</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="9">
+              @if (highlightingErrorText && linkTotalQuantityError) {
+                <ion-badge color="danger" class="floating-bubble-0">{{linkTotalQuantityErrorMessage}}</ion-badge>
+              }
+              <ion-input inputmode="numeric" placeholder="How many shares" type="number" [(ngModel)]="linkTotalQuantity" [ngClass]="{'input-error': linkTotalQuantityError}"></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        @if (linkTotalQuantityError) {
+          <ion-icon slot="end" color="warning" name="alert-circle"></ion-icon>
+        }
+        @if (!linkTotalQuantityError) {
+          <ion-icon slot="end" color="medium" name="checkmark"></ion-icon>
+        }
+      </ion-item>
+      <ion-item [disabled]="linkLimitValueDisabled">
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="3">
+              <ion-label>
+                <p class="field-heading">Price</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="9">
+              @if (highlightingErrorText && linkLimitValueError) {
+                <ion-badge color="danger" class="floating-bubble-0">{{linkLimitValueErrorMessage}}</ion-badge>
+              }
+              <ion-input inputmode="decimal" placeholder="What price" type="number" step="0.01" [(ngModel)]="linkLimitValue" [ngClass]="{'input-error': linkLimitValueError}"></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        @if (linkLimitValueError) {
+          <ion-icon slot="end" color="warning" name="alert-circle"></ion-icon>
+        }
+        @if (!linkLimitValueError) {
+          <ion-icon slot="end" color="medium" name="checkmark"></ion-icon>
+        }
+      </ion-item>
+      @for (balance of accountBalances; track balance; let first = $first) {
+        <ion-item-divider color="primary">
+          @if (first) {
+            <ion-label>Available funds</ion-label>
+          }
+          <ion-label slot="end" class="ion-margin-end">{{balance.tradingDisplay}} {{balance.currency}}</ion-label>
+        </ion-item-divider>
+      }
+      <ion-item [color]="sideColour">
+        <ion-label>Estimated value</ion-label>
+        <ion-label slot="end" class="text-xlarge">{{summaryValue}}</ion-label>
+      </ion-item>
+    </ion-list>
+    @if (anyErrors) {
+      <ion-fab vertical="bottom" horizontal="start" edge="true" slot="fixed">
+        @if (highlightingErrorText) {
+          <ion-fab-button color="warning">
+            <ion-icon name="close" (click)="highlightErrors(false)"></ion-icon>
+          </ion-fab-button>
+        }
+        @if (!highlightingErrorText) {
+          <ion-fab-button color="warning">
+            <ion-icon name="alert" (click)="highlightErrors(true)"></ion-icon>
+          </ion-fab-button>
+        }
+      </ion-fab>
+    }
+  </ion-content>
+}
+
+@if (isSheetActive(2)) {
+  <ion-content>
+    <ion-list>
+      <ion-item [color]="sideColour" class="text-xlarge">
+        Reviewing a {{linkSideDisplay}}
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Trading account</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label color="primary" class="text-large">
+                {{orderPad.account?.id?.display}}
+                <p color="medium" class="text-xsmall">{{orderPad.account?.name}}</p>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Symbol</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label color="primary" class="text-large">
+                {{tradingSymbol?.code}}
+                <p color="medium" class="text-xsmall">{{tradingSymbol?.name}}</p>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="3" push="4">
+              <ion-label class="">
+                <p class="field-heading text-bid">Best bid</p>
+                <div class="highlight-area" [ngClass]="{'highlight-change-area': tradingSymbol?.bestBidChanged}">
+                  @if (dataAvailableSecurity && tradingSymbol?.bestBid) {
+                    <ion-label [ngClass]="{'highlight-change': tradingSymbol?.bestBidChanged}">{{tradingSymbol?.bestBidDisplay}}</ion-label>
+                  } @else {
+                    <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                  }
+                </div>
+              </ion-label>
+            </ion-col>
+            <ion-col size="3" push="4">
+              <ion-label class="">
+                <p class="field-heading text-bid">Bid quantity</p>
+                <div class="highlight-area" [ngClass]="{'highlight-change-area': tradingSymbol?.bidQuantityChanged}">
+                  @if (dataAvailableSecurity && tradingSymbol?.bidQuantity) {
+                    <ion-label [ngClass]="{'highlight-change': tradingSymbol?.bidQuantityChanged}">{{tradingSymbol?.bidQuantityDisplay}}</ion-label>
+                  } @else {
+                    <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                  }
+                </div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="3" push="4">
+              <ion-label class="">
+                <p class="field-heading text-ask">Best ask</p>
+                <div class="highlight-area" [ngClass]="{'highlight-change-area': tradingSymbol?.bestAskChanged}">
+                  @if (dataAvailableSecurity && tradingSymbol?.bestAsk) {
+                    <ion-label [ngClass]="{'highlight-change': tradingSymbol?.bestAskChanged}">{{tradingSymbol?.bestAskDisplay}}</ion-label>
+                  } @else {
+                    <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                  }
+                </div>
+              </ion-label>
+            </ion-col>
+            <ion-col size="3" push="4">
+              <ion-label class="">
+                <p class="field-heading text-ask">Ask quantity</p>
+                <div class="highlight-area" [ngClass]="{'highlight-change-area': tradingSymbol?.askQuantityChanged}">
+                  @if (dataAvailableSecurity && tradingSymbol?.askQuantity) {
+                    <ion-label [ngClass]="{'highlight-change': tradingSymbol?.askQuantityChanged}">{{tradingSymbol?.askQuantityDisplay}}</ion-label>
+                  } @else {
+                    <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                  }
+                </div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Route</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label>
+                {{tradingMarketDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Order type</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label>
+                {{linkOrderTypeDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Time in force</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label>
+                {{linkTimeInForceDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      @if (!linkExpiryDateDisabled) {
+        <ion-item>
+          <ion-grid class="ion-no-padding padding-vertical-small">
+            <ion-row class="ion-align-items-center">
+              <ion-col size="4">
+                <ion-label>
+                  <p class="field-heading">Expiry date</p>
+                </ion-label>
+              </ion-col>
+              <ion-col size="8">
+                <ion-label>
+                  {{linkExpiryDateFormatted}}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      }
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Quantity</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label>
+                {{linkTotalQuantityDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      @if (!linkLimitValueDisabled) {
+        <ion-item>
+          <ion-grid class="ion-no-padding padding-vertical-small">
+            <ion-row class="ion-align-items-center">
+              <ion-col size="4">
+                <ion-label>
+                  <p class="field-heading">Price</p>
+                </ion-label>
+              </ion-col>
+              <ion-col size="8">
+                <ion-label>
+                  {{linkLimitValueDisplay}}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      }
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Estimated value</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label class="text-xlarge">
+                {{summaryValue}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+}
+
+@if (isSheetActive(3)) {
+  <ion-content>
+    <ion-list>
+      <ion-item [color]="sideColour" class="text-xlarge">
+        Placing a {{linkSideDisplay}}
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Status</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="7">
+              <ion-label>
+                <p class="text-xlarge" [ngClass]="{'text-bad':placedStatusBad,'text-good':placedStatusGood}">{{placedStatus}}</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="1" class="text-right">
+              @if (placedStatusGood) {
+                <ion-icon class="ion-no-margin text-xlarge" name="checkmark-done" color="success"></ion-icon>
+              }
+              @if (placedStatusBad) {
+                <ion-icon class="ion-no-margin text-xlarge" name="close" color="danger"></ion-icon>
+              }
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4">
+              <ion-label>
+                <p class="field-heading">Order ID</p>
+              </ion-label>
+            </ion-col>
+            <ion-col size="8">
+              <ion-label color="primary">
+                {{placedOrderId}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-grid class="ion-no-padding padding-vertical-small">
+          @for (errorText of placeOrderRequestErrors; track errorText; let firstRec = $first; let stepNum = $index) {
+            <ion-row class="ion-align-items-center">
+              <ion-col size="4">
+                @if (firstRec) {
+                  <ion-label>
+                    <p class="field-heading">Actions</p>
+                  </ion-label>
+                }
+              </ion-col>
+              <ion-col size="8">
+                <ion-label color="medium">
+                  <p class="ion-no-margin text-small">{{stepNum+1}}. {{errorText}}</p>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          }
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+}
+
+<ion-footer>
+  @if (isSheetActive(1)) {
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color="secondary" fill="solid" (click)="nextSheet()" [disabled]="anyErrors">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Review
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(2)) {
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="secondary" fill="solid" (click)="priorSheet()">
+          <ion-icon slot="start" name="chevron-back"></ion-icon>
+          Edit
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="secondary" fill="solid" (click)="nextSheet()">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Place
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(3)) {
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color="secondary" fill="solid" (click)="resetPad()">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Another order
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+</ion-footer>

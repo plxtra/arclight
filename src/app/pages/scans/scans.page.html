@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Scans</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (!feedActive) {
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-text-wrap">
+        <p class="ion-padding-horizontal">Scanning service not available.</p>
+      </ion-label>
+    </ion-item>
+  } @else {
+    @if (!dataAvailable) {
+      <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    } @else {
+      <ion-fab vertical="bottom" horizontal="center" slot="fixed" edge="false">
+        <ion-fab-button color="secondary">
+          <ion-icon name="add-sharp" (click)="addNewScan()"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <ion-list class="ion-no-padding" lines="full">
+        <ion-item-divider color="primary">
+          <ion-label>Current scans</ion-label>
+        </ion-item-divider>
+        @if (!anyScans) {
+          <ion-item lines="none">
+            <ion-img src="/assets/images/nodata.png" class="align-centre img-12w"></ion-img>
+          </ion-item>
+        }
+        @if (anyScans) {
+          @for (scan of viewData; track scan) {
+            <ion-item button [routerLink]="['/scans/scan-detail', scan?.id]" detail="true">
+              <ion-label>{{scan.name}}</ion-label>
+            </ion-item>
+          }
+        }
+      </ion-list>
+    }
+  }
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="quad">
+    <ion-searchbar [color]="isViewDataFiltered?'secondary':''" placeholder="Search scans" animated autocomplete="off" autocorrect="off" debounce="250" [(ngModel)]="searchText"></ion-searchbar>
+    @if (!isViewDataFiltered) {
+      <ion-badge slot="end" color="medium" class="ion-margin-horizontal ion-padding-horizontal">{{unfilteredCount}}</ion-badge>
+    }
+    @if (isViewDataFiltered) {
+      <ion-badge slot="end" color="secondary" class="ion-margin-horizontal ion-padding-horizontal">{{filteredCount}} / {{unfilteredCount}}</ion-badge>
+    }
+  </ion-toolbar>
+</ion-footer>

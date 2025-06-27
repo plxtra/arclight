@@ -1,0 +1,118 @@
+<ion-content fullscreen scrollX="false" scrollY="false">
+  @if (!dataAvailableDepth) {
+    <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+  }
+
+  <ion-grid>
+    @if (dataAvailableDepth) {
+      <ion-row>
+        <ion-col size="6" class="ion-no-padding">
+          <ion-item-divider color="danger" sticky="true">
+            <ion-label class="align-centre">Bid</ion-label>
+          </ion-item-divider>
+          <ion-content class="flip-it" fullscreen>
+            <ion-list scrollY="true" class="ion-no-padding">
+              <ion-item-divider sticky="true" class="ion-no-padding">
+                <ion-grid class="ion-no-padding">
+                  <ion-row class="ion-no-padding ion-padding-end ion-align-items-center">
+                    <ion-col size="4">
+                      <ion-label class="text-left text-small">Price</ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label class="text-left text-small">Volume</ion-label>
+                    </ion-col>
+                    <ion-col size="2">
+                      <ion-label class="text-left text-small">#</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item-divider>
+              @for (bidLevel of bidLevelList; track trackFullDepth($index, bidLevel)) {
+                <ion-item class="ion-no-padding highlight-area" [ngClass]="{'highlight-change-row': dataAvailableDepth && bidLevel.recordChanged, 'highlight-matchbid-row': dataAvailableDepth && !bidLevel.recordChanged && bidLevel.willPartiallyMatch}">
+                  <!-- Remeber that RTL is active here -->
+                  @if (!dataAvailableDepth) {
+                    <ion-skeleton-text></ion-skeleton-text>
+                  }
+                  @if (dataAvailableDepth) {
+                    <ion-grid class="ion-no-padding">
+                      <ion-row class="ion-align-items-center">
+                        <ion-col size="4">
+                          <div class="highlight-area" [ngClass]="{'highlight-change-area': bidLevel.priceChanged}">
+                            <ion-label color="danger" class="text-left">{{bidLevel.priceDisplay}}</ion-label>
+                          </div>
+                        </ion-col>
+                        <ion-col size="6">
+                          <div class="highlight-area" [ngClass]="{'highlight-change-area': bidLevel.volumeChanged}">
+                            <ion-label class="text-left text-small">{{bidLevel.volumeDisplay}}</ion-label>
+                          </div>
+                        </ion-col>
+                        <ion-col size="2">
+                          <div class="highlight-area" [ngClass]="{'highlight-change-area': bidLevel.countChanged}">
+                            <ion-label class="text-left text-small">{{bidLevel.countDisplay}}</ion-label>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  }
+                </ion-item>
+              }
+            </ion-list>
+          </ion-content>
+        </ion-col>
+        <ion-col size="6" class="ion-no-padding">
+          <ion-item-divider color="success" sticky="true">
+            <ion-label class="align-centre">Ask</ion-label>
+          </ion-item-divider>
+          <ion-content fullscreen>
+            <ion-list scrollY="true" class="ion-no-padding">
+              <ion-item-divider sticky="true" class="ion-no-padding">
+                <ion-grid class="ion-no-padding">
+                  <ion-row class="ion-no-padding ion-padding-end ion-align-items-center">
+                    <ion-col size="4">
+                      <ion-label class="text-right text-small">Price</ion-label>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-label class="text-right text-small">Volume</ion-label>
+                    </ion-col>
+                    <ion-col size="2">
+                      <ion-label class="text-right text-small">#</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item-divider>
+              @for (askLevel of askLevelList; track trackFullDepth($index, askLevel)) {
+                <ion-item class="ion-no-padding highlight-area" [ngClass]="{'highlight-change-row': dataAvailableDepth && askLevel.recordChanged, 'highlight-matchask-row': dataAvailableDepth && !askLevel.recordChanged && askLevel.willPartiallyMatch}">
+                  @if (!dataAvailableDepth) {
+                    <ion-skeleton-text></ion-skeleton-text>
+                  }
+                  @if (dataAvailableDepth) {
+                    <ion-grid class="ion-no-padding">
+                      <ion-row class="ion-align-items-center">
+                        <ion-col size="4">
+                          <div class="highlight-area" [ngClass]="{'highlight-change-area': askLevel.priceChanged}">
+                            <ion-label color="success" class="text-right">{{askLevel.priceDisplay}}</ion-label>
+                          </div>
+                        </ion-col>
+                        <ion-col size="6">
+                          <div class="highlight-area" [ngClass]="{'highlight-change-area': askLevel.volumeChanged}">
+                            <ion-label class="text-right text-small">{{askLevel.volumeDisplay}}</ion-label>
+                          </div>
+                        </ion-col>
+                        <ion-col size="2">
+                          <div class="highlight-area" [ngClass]="{'highlight-change-area': askLevel.countChanged}">
+                            <ion-label class="text-right text-small">{{askLevel.countDisplay}}</ion-label>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  }
+                </ion-item>
+              }
+            </ion-list>
+          </ion-content>
+        </ion-col>
+      </ion-row>
+    }
+
+  </ion-grid>
+</ion-content>

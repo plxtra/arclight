@@ -1,0 +1,417 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    @if (doingCreate) {
+      <ion-title class="title-typeface">Create a Scan</ion-title>
+    }
+    @if (doingUpdate) {
+      <ion-title class="title-typeface">Update a Scan</ion-title>
+    }
+    <ion-buttons slot="end">
+      <ion-button color="secondary" fill="solid" (click)="dismissModal()">Cancel
+        <ion-icon slot="end" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-row class="ion-justify-content-around backdrop-step">
+    <ion-col size="2" class="inactive-step" [ngClass]="{'active-step': isSheetActive(OverviewSheet)}">
+      <ion-text class="text-small">
+        Overview
+      </ion-text>
+    </ion-col>
+    <ion-col size="2" class="inactive-step" [ngClass]="{'active-step': isSheetActive(TargetsSheet)}">
+      <ion-text class="text-small">
+        Targets
+      </ion-text>
+    </ion-col>
+    <ion-col size="2" class="inactive-step" [ngClass]="{'active-step': isSheetActive(CriteriaSheet)}">
+      <ion-text class="text-small">
+        Criteria
+      </ion-text>
+    </ion-col>
+    <ion-col size="2" class="inactive-step" [ngClass]="{'active-step': isSheetActive(NotificationSheet)||isSheetActive(NotificationSettingsSheet)}">
+      <ion-text class="text-small">
+        Notify
+      </ion-text>
+    </ion-col>
+    <ion-col size="2" class="inactive-step" [ngClass]="{'active-step': isSheetActive(ConfirmationSheet)}">
+      <ion-text class="text-small">
+        Confirm
+      </ion-text>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+@if (isSheetActive(OverviewSheet)) {
+  <ion-content>
+    @if (!initialised) {
+      <ion-spinner color="tertiary" name="lines" class="spinner-centre-screen"></ion-spinner>
+    }
+    @if (initialised) {
+      <ion-list class="ion-no-padding">
+        <ion-list-header color="secondary">
+          <ion-label>Details</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label position="stacked">
+            <p class="field-heading">Name</p>
+          </ion-label>
+          <ion-input type="text" aria-label="NameOfScan" placeholder="Name of scan" [(ngModel)]="dataModel.scanStorage.name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">
+            <p class="field-heading">Description</p>
+          </ion-label>
+          <ion-input type="text" aria-label="Description" placeholder="Description of scan" [(ngModel)]="dataModel.scanStorage.description"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox justify="start" labelPlacement="end" [(ngModel)]="dataModel.scanStorage.enabled">Enabled</ion-checkbox>
+        </ion-item>
+      </ion-list>
+      <ion-card class="w-75 align-centre">
+        <ion-card-header color="secondary" class="small-padding-vertical small-padding-horizontal">
+          <ion-card-subtitle class="text-centre">Target type</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="ion-padding">
+            <ion-segment color="tertiary" mode="ios" [(ngModel)]="dataModel.scanStorage.targetType">
+              <ion-segment-button value="symbol">
+                <ion-label>Symbols</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="market">
+                <ion-label>Markets</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    }
+    <ion-card class="stick-to-bottom">
+      <ion-card-header color="medium" class="small-padding-vertical small-padding-horizontal">
+        <ion-card-subtitle>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="auto">
+              <ion-icon name="information-circle" class="text-large"></ion-icon>
+            </ion-col>
+            <ion-col size="auto">
+              <ion-label>Information on scans</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content color="" class="small-padding-vertical small-padding-horizontal text-smaller">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vitae sollicitudin massa. Aenean fringilla, ante sit amet mollis bibendum, velit tellus mattis diam, interdum egestas nisl ante ac dui. Nulla at lorem vitae lorem aliquet feugiat at non mauris.
+        Etiam et justo at ante interdum vestibulum accumsan et tortor. Nam tempor lorem tempor, dignissim metus vitae, tempus nulla. Donec ac magna pretium, dignissim nunc eu, lobortis tortor. In finibus mollis arcu at aliquam.
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+}
+
+@if (isSheetActive(TargetsSheet)) {
+  <ion-content>
+    @if (!initialised) {
+      <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    }
+    @if (initialised && dataModel.scanStorage.isTargetSymbols) {
+      <ion-list class="ion-no-padding">
+        <ion-list-header color="secondary">
+          <ion-label>Selected target symbols</ion-label>
+          <ion-button color="tertiary" class="ion-padding-end" fill="solid" size="small" (click)="addTargetSymbol()">
+            <ion-icon slot="start" name="add"></ion-icon>
+            Add
+          </ion-button>
+        </ion-list-header>
+        @for (targetSymbol of dataModel.scanStorage.selectedSymbols; track targetSymbol) {
+          <ion-item>
+            <ion-label>{{targetSymbol.code}}
+              <p>{{targetSymbol.name}}</p>
+            </ion-label>
+            <ion-button slot="end" color="danger" fill="clear" (click)="removeTargetSymbol(targetSymbol.id)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        }
+      </ion-list>
+    }
+    @if (initialised && dataModel.scanStorage.isTargetMarkets) {
+      <ion-list class="ion-no-padding">
+        <ion-list-header color="secondary">
+          <ion-label>Choose your target markets</ion-label>
+          <ion-button color="medium" class="ion-padding-end" fill="clear" size="small" (click)="dataModel.scanStorage.selectAllMarkets()">
+            All
+          </ion-button>
+          <ion-button color="medium" fill="clear" size="small" (click)="dataModel.scanStorage.selectNoMarkets()">
+            None
+          </ion-button>
+        </ion-list-header>
+        @for (market of dataModel.scanStorage.availableMarkets; track market) {
+          <ion-item>
+            <ion-checkbox justify="start" labelPlacement="end" [value]="market.entry.code" [(ngModel)]="market.checked">
+              {{market.entry.market}}
+              <p class="text-xsmall margin-vertical-small">{{market.entry.code}}</p>
+            </ion-checkbox>
+          </ion-item>
+        }
+      </ion-list>
+    }
+  </ion-content>
+}
+
+@if (isSheetActive(CriteriaSheet)) {
+  <ion-content>
+    @if (!initialised) {
+      <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    }
+    @if (initialised) {
+      <ion-list class="ion-no-padding" lines="none">
+        <ion-list-header color="secondary">
+          <ion-label>Rules builder</ion-label>
+          <!-- -->
+          <ion-button color="medium" fill="clear" size="small" (click)="wildOperation(1)">
+            <ion-icon slot="icon-only" name="nutrition"></ion-icon>
+          </ion-button>
+          <ion-button color="medium" fill="clear" size="small" (click)="wildOperation(2)">
+            <ion-icon slot="icon-only" name="pizza"></ion-icon>
+          </ion-button>
+          <ion-button color="medium" fill="clear" size="small" (click)="wildOperation(0)">
+            <ion-icon slot="icon-only" name="glasses"></ion-icon>
+          </ion-button>
+          <ion-button color="medium" fill="clear" size="small" (click)="wildOperation(3)">
+            <ion-icon slot="icon-only" name="beer"></ion-icon>
+          </ion-button>
+          <!-- -->
+        </ion-list-header>
+        <ion-item>
+          <ion-button slot="start" color="tertiary" class="" (click)="presentAddTrait()">
+            <ion-icon slot="start" name="add"></ion-icon>
+            Add a new trait
+          </ion-button>
+        </ion-item>
+        <!-- Trait -->
+        @for (trait of targetTraitConditions; track trait) {
+          <ion-list-header color="light">
+            <ion-label class="text-large trait-row">{{trait.fieldDisplay}}</ion-label>
+            <ion-button color="danger" (click)="removeTargetTraitCondition(trait.fieldId)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-list-header>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="2" class="text-right">
+              Meets
+            </ion-col>
+            <ion-col size="4">
+              <ion-item class="criteria-entry">
+                <ion-select aria-label="Logical" value="and">
+                  <ion-select-option value="and">All</ion-select-option>
+                  <ion-select-option value="or">Any</ion-select-option>
+                  <ion-select-option value="not">None</ion-select-option>
+                  <ion-select-option value="xor">Only one</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              of these criteria
+            </ion-col>
+            <ion-col size="2" class="text-right">
+              <ion-button color="secondary" (click)="addTraitCriteria(trait.fieldId)">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          @for (condition of trait.criteria; track condition) {
+            <app-trait-condition [style]="trait.fieldStyle"></app-trait-condition>
+          }
+        }
+      </ion-list>
+    }
+  </ion-content>
+}
+
+@if (isSheetActive(NotificationSheet)) {
+  <ion-content>
+    @if (!initialised) {
+      <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    }
+    @if (initialised) {
+      <ion-list class="ion-no-padding">
+        <ion-list-header color="secondary">
+          <ion-label>How to be notified</ion-label>
+        </ion-list-header>
+        @if (!anyDataNotifications) {
+          <ion-item lines="none">
+            <ion-img src="/assets/images/nodata.png" class="align-centre img-25w"></ion-img>
+          </ion-item>
+        }
+        @for (channel of viewDataNotifications; track channel) {
+          <ion-item>
+            <ion-checkbox justify="start" labelPlacement="end" [value]="channel.entry.id" [(ngModel)]="channel.checked">
+              {{channel.entry.name}}
+              <p class="text-xsmall margin-vertical-small">{{channel.entry.description}}</p>
+            </ion-checkbox>
+            <ion-button slot="end" fill="clear" color="medium" class="" (click)="gotoSheet(NotificationSettingsSheet)">
+              <ion-icon slot="icon-only" name="construct"></ion-icon>
+            </ion-button>
+          </ion-item>
+        }
+      </ion-list>
+    }
+  </ion-content>
+}
+
+@if (isSheetActive(NotificationSettingsSheet)) {
+  <ion-content>
+    @if (!initialised) {
+      <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    }
+    @if (initialised) {
+      <ion-list class="ion-no-padding">
+        <ion-list-header color="secondary">
+          <ion-label>Notification settings</ion-label>
+        </ion-list-header>
+        <ion-item (click)="selectCulture.open()" button>
+          <ion-label position="stacked">
+            <p class="field-heading">Culture</p>
+          </ion-label>
+          <app-select-locale #selectCulture></app-select-locale>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">
+            <p class="field-heading">Stable time (Sec)</p>
+          </ion-label>
+          <ion-input type="number" inputmode="numeric" aria-label="Stable" placeholder="Minimum stable time before notification"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">
+            <p class="field-heading">Elapsed time (Sec)</p>
+          </ion-label>
+          <ion-input type="number" inputmode="numeric" aria-label="Elapsed" placeholder="Minimum elapsed time until subsequent notification"></ion-input>
+        </ion-item>
+      </ion-list>
+    }
+  </ion-content>
+}
+
+@if (isSheetActive(ConfirmationSheet)) {
+  <ion-content>
+    @if (!initialised) {
+      <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    }
+    @if (initialised) {
+      <ion-list class="ion-no-padding">
+        <ion-list-header color="secondary">
+          <ion-label>Confirming the details</ion-label>
+        </ion-list-header>
+        <app-scan-summary [model]="dataModel.scanStorage"></app-scan-summary>
+      </ion-list>
+    }
+  </ion-content>
+}
+
+<ion-footer>
+  @if (isSheetActive(OverviewSheet)) {
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(TargetsSheet)">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Next
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(TargetsSheet)) {
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(OverviewSheet)">
+          <ion-icon slot="start" name="chevron-back"></ion-icon>
+          Back
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(CriteriaSheet)">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Next
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(CriteriaSheet)) {
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(TargetsSheet)">
+          <ion-icon slot="start" name="chevron-back"></ion-icon>
+          Back
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(NotificationSheet)">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Next
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(NotificationSheet)) {
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(CriteriaSheet)">
+          <ion-icon slot="start" name="chevron-back"></ion-icon>
+          Back
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(ConfirmationSheet)">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Next
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(NotificationSettingsSheet)) {
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(NotificationSheet)">
+          <ion-icon slot="start" name="chevron-back"></ion-icon>
+          Revert
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(NotificationSheet)">
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+          Apply
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(ConfirmationSheet)) {
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="primary" fill="outline" (click)="gotoSheet(NotificationSheet)">
+          <ion-icon slot="start" name="chevron-back"></ion-icon>
+          Back
+        </ion-button>
+      </ion-buttons>
+      @if (doingCreate) {
+        <ion-buttons slot="end">
+          <ion-button color="primary" fill="solid" (click)="createAndClose()">
+            <ion-icon slot="end" name="chevron-forward"></ion-icon>
+            Create
+          </ion-button>
+        </ion-buttons>
+      }
+      @if (doingUpdate) {
+        <ion-buttons slot="end">
+          <ion-button color="primary" fill="solid" (click)="updateAndClose()">
+            <ion-icon slot="end" name="chevron-forward"></ion-icon>
+            Update
+          </ion-button>
+        </ion-buttons>
+      }
+    </ion-toolbar>
+  }
+
+</ion-footer>

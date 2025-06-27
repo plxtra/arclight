@@ -1,0 +1,21 @@
+ion-datetime {
+    height: auto;
+    width: auto;
+    max-width: 350px;
+}
+
+ion-modal {
+    --width: 290px;
+    --height: 382px;
+    --border-radius: 8px;
+}
+
+ion-modal ion-datetime {
+    color: var(--ion-text-color);
+    height: 382px;
+}
+
+cdk-virtual-scroll-viewport {
+    height: 100%;
+    width: 100%;
+}

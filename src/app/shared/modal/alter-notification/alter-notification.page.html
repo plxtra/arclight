@@ -1,0 +1,188 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    @if (doingCreate) {
+      <ion-title class="title-typeface">Create a Notification</ion-title>
+    }
+    @if (doingUpdate) {
+      <ion-title class="title-typeface">Update a Notification</ion-title>
+    }
+    @if (doingDelete) {
+      <ion-title class="title-typeface">Delete a Notification</ion-title>
+    }
+    <ion-buttons slot="end">
+      <ion-button color="secondary" fill="solid" (click)="dismissModal()">Cancel
+        <ion-icon slot="end" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+@if (isSheetActive(MethodSheet)) {
+  <ion-content>
+    @if (!dataAvailableDistributions) {
+      <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    }
+    <ion-list class="ion-no-margin ion-no-padding" lines="full">
+      <ion-item-divider color="primary">
+        <ion-label>Select a distribution method</ion-label>
+      </ion-item-divider>
+      @if (dataAvailableDistributions) {
+        @if (!anyDataAvailableDistributionMethods) {
+          <ion-item lines="none">
+            <ion-img src="/assets/images/nodata.png" class="align-centre img-12w"></ion-img>
+          </ion-item>
+        }
+        @for (distribution of viewDataAvailableDataDistributions; track distribution) {
+          <ion-item button detail="true" (click)="selectDistributionMethodAndMain(distribution.id)">
+            <ion-label>{{distribution.display}}</ion-label>
+          </ion-item>
+        }
+      }
+    </ion-list>
+  </ion-content>
+}
+
+@if (isSheetActive(MainSheet)) {
+  <ion-content>
+    @if (!initialised || !dataAvailableChannel) {
+      <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    }
+    @if (initialised && dataAvailableChannel) {
+      <form class="ion-no-padding" [formGroup]="ionicForm" novalidate>
+        <ion-item color="light" class="ion-align-items-center" lines="full" button (click)="chooseDistributionMethod()">
+          <ion-icon slot="start" name="search"></ion-icon>
+          <ion-label>
+            <p class="field-heading">Distribution method</p>
+            {{selectedDistribution?.display}}
+          </ion-label>
+          @if (!isFieldValid('distributionMethod')) {
+            <ion-icon slot="end" color="danger" name="alert-circle-outline"></ion-icon>
+          }
+        </ion-item>
+        @for (field of inputFields; track field) {
+          @if (field.visible) {
+            <ion-item class="ion-align-items-center">
+              @if (field.type === 'Text') {
+                <ion-input [formControlName]="field.id" [placeholder]="field.placeholder" type="text" labelPlacement="stacked" autocomplete="ignore-me">
+                  <ion-label slot="label" color="secondary">{{field.label}}</ion-label>
+                </ion-input>
+              }
+              @if (field.type === 'Flag') {
+                <ion-checkbox justify="start" labelPlacement="end" [formControlName]="field.id">{{field.label}}</ion-checkbox>
+              }
+              @if (!isFieldValid(field.id)) {
+                <ion-icon slot="end" color="danger" name="alert-circle-outline"></ion-icon>
+              }
+            </ion-item>
+          }
+        }
+      </form>
+    }
+  </ion-content>
+}
+
+
+<ion-footer>
+  @if (isSheetActive(MethodSheet)) {
+    <ion-toolbar>
+      <ion-buttons slot="start" (click)="gotoSheet(MainSheet)">
+        <ion-button color="primary" fill="outline">
+          <ion-icon slot="start" name="chevron-back"></ion-icon>
+          Back
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(MainSheet) && !ionicForm.valid) {
+    <ion-toolbar>
+      <ion-card>
+        <ion-card-header color="danger" class="ion-margin-bottom">
+          <ion-card-subtitle>
+            <ion-label><strong>Validation errors:</strong></ion-label>
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          @for (validation of validations; track validation) {
+            @if (ionicForm.get(validation.fieldId)?.hasError(validation.type)) {
+              <ion-row class="ion-align-items-center">
+                <ion-col size="auto">
+                  <ion-icon name="ellipse" class="text-xsmall"></ion-icon>
+                </ion-col>
+                <ion-col size="auto">
+                  <ion-label>{{validation.message}}</ion-label>
+                </ion-col>
+              </ion-row>
+            }
+          }
+        </ion-card-content>
+      </ion-card>
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(MainSheet) && hasSaveErrors) {
+    <ion-toolbar>
+      @if (hasSaveErrors) {
+        <ion-card color="danger" class="">
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-label><strong>Error!</strong></ion-label>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            @for (err of saveErrors; track err) {
+              <ion-row class="ion-align-items-center" color="danger" lines="none">
+                <ion-col size="auto">
+                  <ion-icon name="warning-outline" class="text-large"></ion-icon>
+                </ion-col>
+                <ion-col size="auto">
+                  <ion-label class="ion-text-wrap">{{err}}</ion-label>
+                </ion-col>
+              </ion-row>
+            }
+          </ion-card-content>
+          <ion-button fill="clear" color="medium" (click)="clearSaveErrors()">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Clear
+          </ion-button>
+        </ion-card>
+      }
+    </ion-toolbar>
+  }
+
+  @if (isSheetActive(MainSheet)) {
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="primary" fill="outline" (click)="dismissModal()">
+          <ion-icon slot="start" name="close"></ion-icon>
+          Cancel
+        </ion-button>
+      </ion-buttons>
+      @if (doingCreate) {
+        <ion-buttons slot="end">
+          <ion-button color="primary" fill="solid" (click)="createAndClose()" [disabled]="!initialised || !ionicForm.valid">
+            <ion-icon slot="end" name="chevron-forward"></ion-icon>
+            Create
+          </ion-button>
+        </ion-buttons>
+      }
+      @if (doingUpdate) {
+        <ion-buttons slot="end">
+          <ion-button color="primary" fill="solid" (click)="updateAndClose()" [disabled]="!initialised || !ionicForm.valid">
+            <ion-icon slot="end" name="chevron-forward"></ion-icon>
+            Update
+          </ion-button>
+        </ion-buttons>
+      }
+      @if (doingDelete) {
+        <ion-buttons slot="end">
+          <ion-button color="danger" fill="solid" (click)="deleteAndClose()" [disabled]="!initialised || !ionicForm.valid">
+            <ion-icon slot="end" name="trash"></ion-icon>
+            Delete
+          </ion-button>
+        </ion-buttons>
+      }
+    </ion-toolbar>
+  }
+
+</ion-footer>

@@ -1,0 +1,196 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="quad">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+            <app-open-orders-control></app-open-orders-control>
+        </ion-buttons>
+        <ion-title class="title-typeface">Order</ion-title>
+        <ion-buttons slot="end">
+            <ion-back-button defaultHref="/orders"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list class="ion-no-padding">
+        <ion-item color="secondary" lines="none">
+            <ion-label class="text-xlarge">{{orderDetails?.side}}</ion-label>
+            <ion-label slot="end" class="">{{orderDetails?.status}}</ion-label>
+        </ion-item>
+
+        <app-standard-security-control [securityCode]="orderDetails?.code" [showCodeNamePrice]="true" [showAuction]="true" [showExtended]="true" [showBest]="true" [showOhlc]="true">
+        </app-standard-security-control>
+
+        <ion-item>
+            <ion-grid class="ion-no-padding padding-vertical-small">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Trading account</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="8">
+                        <ion-label>
+                            {{orderDetails?.accountIdDisplay}}
+                            <p color="medium" class="text-xsmall">{{orderDetails?.accountName}}</p>
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item>
+            <ion-grid class="ion-no-padding padding-vertical-small">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Side</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="8">
+                        <ion-label>
+                            {{orderDetails?.side}}
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item>
+            <ion-grid class="ion-no-padding padding-vertical-small">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Type</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="8">
+                        <ion-label>
+                            {{orderDetails?.orderType}}
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item>
+            <ion-grid class="ion-no-padding padding-vertical-small">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Placed</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Quantity</p>
+                            {{orderDetails?.placedQuantityDisplay}}
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Price</p>
+                            {{orderDetails?.placedPriceDisplay}}
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item>
+            <ion-grid class="ion-no-padding padding-vertical-small">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Traded</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Quantity</p>
+                            {{orderDetails?.tradedQuantityDisplay}}
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Price</p>
+                            {{orderDetails?.tradedPriceDisplay}}
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item>
+            <ion-grid class="ion-no-padding padding-vertical-small">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Untraded</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="8">
+                        <ion-label>
+                            {{orderDetails?.untradedQuantityDisplay}}
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item lines="none">
+            <ion-grid class="ion-no-padding padding-vertical-small">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="5">
+                        <ion-button expand="block" fill="solid" (click)="modifySelectedOrder()" [disabled]="!orderDetails?.canAmend">Amend</ion-button>
+                    </ion-col>
+                    <ion-col size="5" push="2">
+                        <ion-button color="danger" expand="block" fill="solid" (click)="cancelSelectedOrder()" [disabled]="!orderDetails?.canCancel">Cancel</ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item lines="none">
+            <ion-grid class="ion-no-padding padding-vertical-small">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Created</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="8" class="text-right">
+                        <ion-label color="medium" class="text-small">
+                            {{orderDetails?.createdDisplay}}
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Last update</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="8" class="text-right">
+                        <ion-label color="medium" class="text-small">
+                            {{orderDetails?.updatedDisplay}}
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="4">
+                        <ion-label>
+                            <p class="field-heading">Order ID</p>
+                        </ion-label>
+                    </ion-col>
+                    <ion-col size="8" class="text-right">
+                        <ion-label color="medium" class="text-small">
+                            {{orderDetails?.orderId}}
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+    </ion-list>
+</ion-content>

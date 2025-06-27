@@ -1,0 +1,222 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Stocks</ion-title>
+    <ion-buttons slot="end">
+      @if (!doingReorder) {
+        <ion-button color="primary" (click)="toggleReorder()">
+          <ion-icon name="swap-vertical-sharp"></ion-icon>
+        </ion-button>
+      }
+      @if (doingReorder) {
+        <ion-button color="danger" (click)="toggleReorder()">
+          <ion-label>Done</ion-label>
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  @if (!dataAvailable) {
+    <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+  }
+
+  @if (dataAvailable) {
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed" edge="true">
+      <ion-fab-button color="secondary" (click)="presentSymbolSearchModal()" >
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  }
+
+  @if (dataAvailable && !emptyList) {
+    <ion-reorder-group #reorderGroup (ionItemReorder)="doReorder($event)">
+      @for (security of securitiesList; track security; let firstElement = $first) {
+        <ion-item-sliding>
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="removeSymbol(security.code)">
+              Remove
+            </ion-item-option>
+          </ion-item-options>
+          <ion-reorder>
+            <ion-item [routerLink]="['/stocks/stock-detail', security?.globalIdentifier]" button [detail]="!doingReorder" class="ion-no-padding highlight-area" [ngClass]="{'highlight-change-row': security?.recordChanged}">
+              <ion-reorder slot="start" class="small-margin"></ion-reorder>
+              @if (!security?.usable) {
+                <ion-grid>
+                  <ion-row class="ion-align-items-center">
+                    <ion-col size="3" size-sm="2">
+                      <ion-label class="text-larger">
+                        <ion-skeleton-text class="full-skeleton" animated></ion-skeleton-text>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size="3" size-sm="2">
+                      <ion-label class="text-right">
+                        <p>Close</p>
+                        <ion-skeleton-text class="full-skeleton" animated></ion-skeleton-text>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size="3" size-sm="2">
+                      <ion-label class="text-right">
+                        <p>Open</p>
+                        <ion-skeleton-text class="full-skeleton" animated></ion-skeleton-text>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col class="ion-hide-sm-down" size-sm="2">
+                      <ion-label class="text-right">
+                        <p>High</p>
+                        <ion-skeleton-text class="full-skeleton" animated></ion-skeleton-text>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col class="ion-hide-sm-down" size-sm="2">
+                      <ion-label class="text-right">
+                        <p>Low</p>
+                        <ion-skeleton-text class="full-skeleton" animated></ion-skeleton-text>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size="3" size-sm="2">
+                      <ion-label class="text-larger text-right">
+                        <ion-skeleton-text class="full-skeleton" animated></ion-skeleton-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-skeleton-text class="text-small" animated></ion-skeleton-text>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              }
+              @if (security?.usable) {
+                <ion-grid>
+                  <ion-row class="ion-align-items-center">
+                    <ion-col size="4" size-sm="2">
+                      <ion-label color="primary" class="text-xlarge">
+                        {{security.code}}
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size-sm="2">
+                      <ion-label class="text-right">
+                        <p class="field-heading">Close</p>
+                        <div class="highlight-area" [ngClass]="{'highlight-change-area': security.closeChanged}">
+                          @if (security.close) {
+                            <ion-label [ngClass]="{'highlight-change': security.closeChanged}" class="text-small">{{security.closeDisplay}}</ion-label>
+                          } @else {
+                            <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                          }
+                        </div>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size-sm="2">
+                      <ion-label class="text-right">
+                        <p class="field-heading">Open</p>
+                        <div class="highlight-area" [ngClass]="{'highlight-change-area': security.openChanged}">
+                          @if (security.open) {
+                            <ion-label [ngClass]="{'highlight-change': security.openChanged}" class="text-small">{{security.openDisplay}}</ion-label>
+                          } @else {
+                            <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                          }
+                        </div>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col class="ion-hide-sm-down" size-sm="2">
+                      <ion-label class="text-right">
+                        <p class="field-heading">High</p>
+                        <div class="highlight-area" [ngClass]="{'highlight-change-area': security.highChanged}">
+                          @if (security.high) {
+                            <ion-label [ngClass]="{'highlight-change': security.highChanged}" class="text-small">{{security.highDisplay}}</ion-label>
+                          } @else {
+                            <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                          }
+                        </div>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col class="ion-hide-sm-down" size-sm="2">
+                      <ion-label class="text-right">
+                        <p class="field-heading">Low</p>
+                        <div class="highlight-area" [ngClass]="{'highlight-change-area': security.lowChanged}">
+                          @if (security.low) {
+                            <ion-label [ngClass]="{'highlight-change': security.lowChanged}" class="text-small">{{security.lowDisplay}}</ion-label>
+                          } @else {
+                            <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                          }
+                        </div>
+                      </ion-label>
+                    </ion-col>
+                    @if (!security?.auctionPrice) {
+                      <ion-col size="3" size-sm="2">
+                        <ion-label class="text-larger text-right">
+                          <div class="highlight-area" [ngClass]="{'highlight-change-area': readLastOrClosedChanged(security) > 0 || readLastOrClosedChanged(security) < 0}">
+                            @if (security.lastOrClose) {
+                              <ion-label [ngClass]="{'increase': readLastOrClosedChanged(security) > 0, 'decrease': readLastOrClosedChanged(security) < 0}" class="text-large lapel">
+                                {{security.lastOrCloseDisplay}}
+                                @if (security.isTodayDeltaIncrease) {
+                                  <ion-badge mode="ios" color="success">{{security.todayDeltaDisplay}}</ion-badge>
+                                }
+                                @if (security.isTodayDeltaDecrease) {
+                                  <ion-badge mode="ios" color="danger">{{security.todayDeltaDisplay}}</ion-badge>
+                                }
+                                @if (security.isTodayDeltaStatic) {
+                                  <ion-badge mode="ios">{{security.todayDeltaDisplay}}</ion-badge>
+                                }
+                              </ion-label>
+                            } @else {
+                              <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                            }
+                          </div>
+                        </ion-label>
+                      </ion-col>
+                    }
+                    @if (security?.auctionPrice) {
+                      <ion-col size="3" size-sm="2" class="ion-no-padding">
+                        <ion-label class="text-larger text-right">
+                          <p class="auction-heading">Auction</p>
+                          <div class="highlight-area" [ngClass]="{'highlight-change-area': security?.auctionPriceChanged}">
+                            @if (security.auctionPrice) {
+                              <ion-label color="tertiary">{{security.auctionPriceDisplay}}</ion-label>
+                            } @else {
+                              <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                            }
+                          </div>
+                        </ion-label>
+                      </ion-col>
+                    }
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="11" push="1" class="ion-no-padding">
+                      <ion-label color="medium" class="text-xsmall">{{security.name}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              }
+            </ion-item>
+          </ion-reorder>
+        </ion-item-sliding>
+      }
+    </ion-reorder-group>
+  }
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="quad">
+    <ion-item lines="none">
+      <ion-buttons slot="start">
+        <ion-button color="success" (click)="addWatchlist()">
+          <ion-icon slot="icon-only" name="add-sharp"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="removeWatchlist()">
+          <ion-icon slot="icon-only" name="remove-sharp"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-select class="select-right" interface="action-sheet" [interfaceOptions]="customActionSheetOptions" [value]="symbolListCode" okText="OK" cancelText="Cancel" slot="end">
+        @for (available of availableWatchlists; track available) {
+          <ion-select-option [value]="available.code">{{available.display}}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+  </ion-toolbar>
+</ion-footer>

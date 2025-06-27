@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-title class="title-typeface">Symbol search</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" fill="solid" (click)="dismissModal()">Cancel
+        <ion-icon slot="end" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-list>
+    <ion-item lines="full">
+      <ion-segment class="radio-centre" mode="ios" (ionChange)="segmentChanged($event)" value="startsWith">
+        <ion-segment-button value="startsWith">
+          <ion-label>Starts with</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="endsWith">
+          <ion-label>Ends with</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="exact">
+          <ion-label>Exactly</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-input #searchFor label="Search for:" inputmode="search" enterkeyhint="search" type="search" [(ngModel)]="searchText" placeholder="name or code" (keypress)="searchKeypressHandler($event.keyCode)"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-button class="w-100" size="default" (click)="doSearch()" color="primary" expand="block">
+        Search
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-header>
+
+<ion-content>
+  <cdk-virtual-scroll-viewport itemSize="54" minBufferPx="900" maxBufferPx="1350">
+    <ion-list>
+      @if (!anyResults) {
+        <ion-item lines="none">
+          <ion-img src="/assets/images/nodata.png" class="align-centre img-25w"></ion-img>
+        </ion-item>
+      }
+
+      <ion-item *cdkVirtualFor="let matched of searchList" class="account-card" button detail="true" (click)="selectSymbol(matched.key)">
+        <ion-grid class="ion-no-padding">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="4" size-sm="3">
+              @if (dataAvailable) {
+                <ion-label class="ion-text-nowrap">
+                  {{matched.code}}
+                </ion-label>
+              }
+              @if (!dataAvailable) {
+                <ion-skeleton-text animated class="full-skeleton"></ion-skeleton-text>
+              }
+            </ion-col>
+            <ion-col size="1">
+              @if (dataAvailable) {
+                <ion-label color="medium" class="text-xsmall ion-text-nowrap">
+                  {{matched.exchange}}
+                </ion-label>
+              }
+              @if (!dataAvailable) {
+                <ion-skeleton-text animated class="full-skeleton"></ion-skeleton-text>
+              }
+            </ion-col>
+            <ion-col size="7" size-sm="8">
+              @if (dataAvailable) {
+                <ion-label color="medium" class="ion-text-nowrap">{{matched.name}}</ion-label>
+              }
+              @if (!dataAvailable) {
+                <ion-skeleton-text animated class="full-skeleton"></ion-skeleton-text>
+              }
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </cdk-virtual-scroll-viewport>
+</ion-content>

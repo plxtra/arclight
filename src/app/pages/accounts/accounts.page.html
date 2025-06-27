@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Accounts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (!dataAvailable) {
+    <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+  }
+
+  @if (dataAvailable) {
+    <cdk-virtual-scroll-viewport itemSize="54" minBufferPx="900" maxBufferPx="1350">
+      <ion-list>
+        <ion-item *cdkVirtualFor="let account of accountList" class="account-card" button [routerLink]="['/accounts/account-detail', account?.zenithCode]" detail="true">
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="12">
+                @if (dataAvailable && account.display) {
+                  <ion-label color="primary" class="text-xlarge">
+                    {{account.display}}
+                  </ion-label>
+                } @else {
+                  <ion-skeleton-text animated class="full-skeleton"></ion-skeleton-text>
+                }
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="11" push="1" class="ion-no-padding">
+                @if (dataAvailable && account.name) {
+                  <ion-label color="medium" class="text-xsmall">
+                    {{account.name}}
+                  </ion-label>
+                } @else {
+                  <ion-skeleton-text animated class="full-skeleton"></ion-skeleton-text>
+                }
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </cdk-virtual-scroll-viewport>
+  }
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="quad">
+    <ion-searchbar [color]="isViewDataFiltered?'secondary':''" placeholder="Search accounts" animated autocomplete="off" autocorrect="off" debounce="250" [(ngModel)]="searchText"></ion-searchbar>
+    @if (!isViewDataFiltered) {
+      <ion-badge slot="end" color="medium" class="ion-margin-horizontal ion-padding-horizontal">{{unfilteredCount}}</ion-badge>
+    }
+    @if (isViewDataFiltered) {
+      <ion-badge slot="end" color="secondary" class="ion-margin-horizontal ion-padding-horizontal">{{filteredCount}} / {{unfilteredCount}}</ion-badge>
+    }
+  </ion-toolbar>
+</ion-footer>

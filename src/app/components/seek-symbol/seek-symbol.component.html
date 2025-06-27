@@ -1,0 +1,97 @@
+@if (selected) {
+  <div>
+    <span>{{selected}}</span>
+  </div>
+} @else {
+  <span class="placeholder">Click to search</span>
+}
+
+
+<ion-modal [isOpen]="isOpen" (ionModalDidPresent)="searchWasPresented()" backdrop-dismiss="false" class="symbol-search-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="quad">
+        <ion-buttons slot="end">
+          <ion-button color="secondary" fill="solid" (click)="cancel()">
+            Cancel
+            <ion-icon slot="end" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title class="title-typeface">Symbol search</ion-title>
+      </ion-toolbar>
+
+      <ion-item>
+        <ion-searchbar #symbolSearchbar class="ion-no-padding compressed-searchbar" placeholder="Search" inputmode="text" type="text" (ionInput)="onSearchInput($any($event))" [debounce]="250"></ion-searchbar>
+        <ion-button slot="end" fill="outline" (click)="toggleOptionsDisplay()" expand="block">
+          Options
+          @if (!showingOptions) {
+            <ion-icon slot="start" class="tiny-padding-horizontal" name="eye"></ion-icon>
+          }
+          @if (showingOptions) {
+            <ion-icon slot="start" class="tiny-padding-horizontal" name="eye-off"></ion-icon>
+          }
+        </ion-button>
+      </ion-item>
+
+
+      @if (showingOptions) {
+        <ion-card color="dark">
+          <ion-card-content>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="3" class="">
+                <ion-label>Field:</ion-label>
+              </ion-col>
+              <ion-col size="9">
+                <ion-segment class="" color="primary" mode="ios" value="both">
+                  <ion-segment-button value="code">
+                    <ion-label>Code</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="name">
+                    <ion-label>Name</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="both">
+                    <ion-label>Both</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="3" class="">
+                <ion-label>Match:</ion-label>
+              </ion-col>
+              <ion-col size="9">
+                <ion-segment class="" color="primary" mode="ios" value="like">
+                  <ion-segment-button value="like">
+                    <ion-label>Like</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="exact">
+                    <ion-label>Exact</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="3" class="">
+                <ion-label>Method:</ion-label>
+              </ion-col>
+              <ion-col size="9">
+                <ion-segment class="" color="primary" mode="ios" value="abridged">
+                  <ion-segment-button value="abridged">
+                    <ion-label>Abridged</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="complete">
+                    <ion-label>Complete</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      }
+
+    </ion-header>
+
+    <ion-content>
+    </ion-content>
+  </ng-template>
+</ion-modal>

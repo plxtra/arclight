@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Arclight</title>
+
+    <base href="/" />
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+
+    <link rel="apple-touch-icon" size="120x120" href="assets/icon/apple-120.png">
+    <link rel="apple-touch-icon" size="152x152" href="assets/icon/apple-152.png">
+    <link rel="apple-touch-icon" size="167x167" href="assets/icon/apple-167.png">
+    <link rel="apple-touch-icon" size="180x180" href="assets/icon/apple-180.png">
+    <link rel="apple-touch-startup-image" href="assets/images/launch.png">
+
+    <!-- add to homescreen for ios -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- deprecated -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#dd6d21">
+
+    <!-- <script src="HackTimer.js"></script> -->
+    <!-- <script src="HackTimerWorker.js"></script> -->
+
+    <style>
+        .fillbox {
+            display: grid;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cover-all {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .top-right-reload {
+            position: absolute;
+            top: 10px;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body class="constrained-width">
+    <app-root>
+        <div class="fillbox">
+            <img class="cover-all" src="assets/images/splash.jpg" alt="Splash">
+        </div>
+        <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+    </app-root>
+    <noscript>Please enable JavaScript to continue using this application.</noscript>
+</body>
+
+</html>

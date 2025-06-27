@@ -1,0 +1,248 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Account</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/accounts"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Account header -->
+  <ion-list class="padding-vertical-none">
+    <ion-item color="secondary" lines="none">
+      @if (dataAvailableAccount && accountDetails?.display && accountDetails?.name) {
+        <ion-label>
+          <h1>{{accountDetails?.display}}</h1>
+          <p>{{accountDetails?.name}}</p>
+        </ion-label>
+      } @else {
+        <h1>
+          <ion-skeleton-text animated class="full-skeleton"></ion-skeleton-text>
+        </h1>
+        <p>
+          <ion-skeleton-text animated class="full-skeleton"></ion-skeleton-text>
+        </p>
+        <ion-skeleton-text animated class="full-skeleton"></ion-skeleton-text>
+      }
+    </ion-item>
+  </ion-list>
+
+  <!-- Balances -->
+  <ion-list class="padding-vertical-none">
+    <ion-item-divider color="primary">
+      <ion-label>Balances</ion-label>
+    </ion-item-divider>
+    @if (!hasBalances) {
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto" class="align-centre">
+              <ion-label>No balances</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    }
+
+    @for (balance of balancesDetails; track balance; let firstElement = $first) {
+      <ion-item class="balances-cap-width">
+        <ion-grid class="ion-no-padding">
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="4">
+              <ion-label color="secondary"><strong>{{balance.currency}}</strong></ion-label>
+            </ion-col>
+            <ion-col size="4">
+              <ion-label color="medium">Nett</ion-label>
+            </ion-col>
+            <ion-col size="4" class="text-right">
+              <ion-label>{{balance.nettDisplay}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <ion-label color="secondary"></ion-label>
+            </ion-col>
+            <ion-col size="4">
+              <ion-label color="medium">Trading</ion-label>
+            </ion-col>
+            <ion-col size="4" class="text-right">
+              <ion-label>{{balance.tradingDisplay}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <ion-label color="secondary"></ion-label>
+            </ion-col>
+            <ion-col size="4">
+              <ion-label color="medium">Non-trading</ion-label>
+            </ion-col>
+            <ion-col size="4" class="text-right">
+              <ion-label>{{balance.nonTradingDisplay}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <ion-label color="secondary"></ion-label>
+            </ion-col>
+            <ion-col size="4">
+              <ion-label color="medium">Unfilled buys</ion-label>
+            </ion-col>
+            <ion-col size="4" class="text-right">
+              <ion-label>{{balance.unfilledBuysDisplay}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <ion-label color="secondary"></ion-label>
+            </ion-col>
+            <ion-col size="4">
+              <ion-label color="medium">Margin</ion-label>
+            </ion-col>
+            <ion-col size="4" class="text-right">
+              <ion-label>{{balance.marginDisplay}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    }
+
+  </ion-list>
+
+  <!-- Holdings -->
+  <ion-list class="padding-vertical-none">
+    <ion-item-divider color="primary">
+      <ion-label>Holdings</ion-label>
+    </ion-item-divider>
+    @if (!hasHoldings) {
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto" class="align-centre">
+              <ion-label>No holdings</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    }
+    @for (holding of holdingsDetails; track holding; let firstElement = $first) {
+      <ion-item>
+        <ion-grid class="ion-no-padding">
+          <ion-row>
+            <ion-col size="6" size-sm="3">
+              <ion-label>
+                @if (firstElement) {
+                  <p class="text-xsmall">Code</p>
+                }
+                {{holding.code}}
+              </ion-label>
+            </ion-col>
+            <ion-col class="ion-hide-sm-down" size-sm="3">
+              <ion-label class="text-right">
+                @if (firstElement) {
+                  <p class="text-xsmall">Ave Price</p>
+                }
+                {{holding.averagePriceDisplay}}
+              </ion-label>
+            </ion-col>
+            <ion-col class="ion-hide-sm-down" size-sm="3">
+              <ion-label class="text-right">
+                @if (firstElement) {
+                  <p class="text-xsmall">Total</p>
+                }
+                {{holding.totalQuantityDisplay}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="6" size-sm="3">
+              <ion-label class="text-right">
+                @if (firstElement) {
+                  <p class="text-xsmall">Available</p>
+                }
+                {{holding.totalAvailableQuantityDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="11" push="1">
+              <ion-label class="text-xsmall" color="medium">{{holding.name}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-button class="margin-horizontal-small-button" slot="end" color="danger" (click)="clickNewBidOrder(holding.ivemId)" expand="block" fill="solid" shape="round">
+          Buy
+        </ion-button>
+        <ion-button class="margin-horizontal-small-button" slot="end" color="success" (click)="clickNewAskOrder(holding.ivemId)" expand="block" fill="solid" shape="round">
+          Sell
+        </ion-button>
+      </ion-item>
+    }
+  </ion-list>
+
+  <!-- Orders -->
+  <ion-list class="padding-vertical-none">
+    <ion-item-divider color="primary">
+      <ion-label>Orders</ion-label>
+    </ion-item-divider>
+    @if (!hasOrders) {
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto" class="align-centre">
+              <ion-label>No orders</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    }
+
+    @for (order of orderDetails; track order; let firstElement = $first) {
+      <ion-item button [routerLink]="['/orders/order-detail', order?.accountIdDisplay, order?.orderId]" detail="true">
+        <ion-grid class="ion-no-padding">
+          <ion-row>
+            <ion-col size="3">
+              <ion-label class="">
+                @if (firstElement) {
+                  <p class="text-xsmall">Code</p>
+                }
+                {{order.code}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label class="">
+                @if (firstElement) {
+                  <p class="text-xsmall">Side</p>
+                }
+                {{order.side}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label class="text-right">
+                @if (firstElement) {
+                  <p class="text-xsmall">Quantity</p>
+                }
+                {{order.placedQuantityDisplay}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label class="text-right">
+                @if (firstElement) {
+                  <p class="text-xsmall">Price</p>
+                }
+                {{order.placedPriceDisplay}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="11" push="1">
+              <ion-label class="text-xsmall" color="medium">{{order.name}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>

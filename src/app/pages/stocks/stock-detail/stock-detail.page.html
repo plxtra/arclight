@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Stock</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-list class="padding-vertical-none">
+  @if (!dataAvailableSecurity) {
+    <ion-item color="secondary" lines="none">
+      <ion-label>
+        <h1>
+          <ion-skeleton-text class="full-skeleton" animated></ion-skeleton-text>
+        </h1>
+        <p>
+          <ion-skeleton-text class="full-skeleton" animated></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  }
+
+  @if (dataAvailableSecurity) {
+    <ion-item color="secondary" lines="none">
+      @if (priceIncrease) {
+        <ion-icon slot="end" class="heading-price-margin increase" name="arrow-up-circle"></ion-icon>
+      }
+      @if (priceDecrease) {
+        <ion-icon slot="end" class="heading-price-margin decrease" name="arrow-down-circle"></ion-icon>
+      }
+      <ion-label slot="end" class="text-xxlarge heading-price-margin" [ngClass]="{'increase': priceIncrease, 'decrease': priceDecrease}">
+        {{securityDetail?.lastOrCloseDisplay}}
+      </ion-label>
+      <ion-label>
+        <h1>{{securityDetail?.code}}</h1>
+        <p>{{securityDetail?.name}}</p>
+      </ion-label>
+    </ion-item>
+  }
+</ion-list>
+
+<ion-content>
+  @if (dataAvailableSecurity) {
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="general">
+          <ion-icon name="information-sharp"></ion-icon>
+          <ion-label>General</ion-label>
+        </ion-tab-button>
+        @if (securityDetail?.hasDepthFull) {
+          <ion-tab-button tab="depth">
+            <ion-icon name="book-sharp"></ion-icon>
+            <ion-label>Depth</ion-label>
+          </ion-tab-button>
+        }
+        @if (securityDetail?.hasDepthShort) {
+          <ion-tab-button tab="depthshort">
+            <ion-icon name="book-sharp"></ion-icon>
+            <ion-label>Depth</ion-label>
+          </ion-tab-button>
+        }
+        @if (securityDetail?.hasTradeData) {
+          <ion-tab-button tab="trades">
+            <ion-icon name="list-sharp"></ion-icon>
+            <ion-label>Trades</ion-label>
+          </ion-tab-button>
+        }
+        @if (securityDetail?.hasTradeData) {
+          <ion-tab-button tab="chart">
+            <ion-icon name="stats-chart-sharp"></ion-icon>
+            <ion-label>Chart</ion-label>
+          </ion-tab-button>
+        }
+      </ion-tab-bar>
+    </ion-tabs>
+  }
+</ion-content>

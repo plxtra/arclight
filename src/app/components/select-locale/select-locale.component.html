@@ -1,0 +1,51 @@
+@if (selected) {
+  <div>
+    <span>{{selected.name}} - {{selected.location}} ({{selected.tag}})</span>
+  </div>
+} @else {
+  <span class="placeholder">Click to search</span>
+}
+
+
+<ion-modal [isOpen]="isOpen" (ionModalDidPresent)="modalWasPresented()" backdrop-dismiss="false" class="select-locale-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="quad">
+        <ion-buttons slot="end">
+          <ion-button color="secondary" fill="solid" (click)="cancel()">
+            Cancel
+            <ion-icon slot="end" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title class="title-typeface">Select culture</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <cdk-virtual-scroll-viewport #viewPort itemSize="54" minBufferPx="900" maxBufferPx="1350">
+        <ion-list>
+          @if (!anyData) {
+            <ion-item lines="none">
+              <ion-img src="/assets/images/nodata.png" class="align-centre img-25w"></ion-img>
+            </ion-item>
+          }
+
+          <ion-item *cdkVirtualFor="let culture of viewData" button="true" (click)="select(culture.tag)" [ngClass]="{'selected-area': isSelectedEntry(culture.tag)}">
+            <ion-label slot="end" color="medium" class="text-small">{{culture.tag}}</ion-label>
+            <ion-label>{{culture.name}}
+              <p>{{culture.location}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </cdk-virtual-scroll-viewport>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-item>
+          <ion-searchbar #localeSearchbar class="ion-no-padding" animated autocomplete="off" placeholder="Search" inputmode="text" type="text" [(ngModel)]="searchText" debounce="250"></ion-searchbar>
+        </ion-item>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

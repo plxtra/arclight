@@ -1,0 +1,234 @@
+<ion-card>
+  @if (showCodeNamePrice) {
+    <ion-card-header color="primary" class="small-padding-vertical small-padding-horizontal">
+      <ion-grid class="ion-no-padding w-100">
+        <ion-row class="ion-align-items-center">
+          <ion-col size="8">
+            <ion-label class="text-large">{{securityDetail?.code}}</ion-label>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label class="text-larger text-right">
+              <div class="highlight-area" [ngClass]="{'highlight-change-area': readLastOrClosedChanged(securityDetail) > 0 || readLastOrClosedChanged(securityDetail) < 0}">
+                @if (securityDetail?.lastOrClose) {
+                  <ion-label [ngClass]="{'increase': readLastOrClosedChanged(securityDetail) > 0, 'decrease': readLastOrClosedChanged(securityDetail) < 0}" class="text-large">
+                    {{securityDetail?.lastOrCloseDisplay}}
+                  </ion-label>
+                } @else {
+                  <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+                }
+              </div>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="8">
+            <ion-label class="text-xsmall">
+              {{securityDetail?.name}}
+            </ion-label>
+          </ion-col>
+          <ion-col size="4" class="">
+            @if (securityDetail?.isTodayDeltaIncrease) {
+              <ion-badge mode="ios" color="success" class="ion-float-right">{{securityDetail?.todayDeltaDisplay}}</ion-badge>
+            }
+            @if (securityDetail?.isTodayDeltaDecrease) {
+              <ion-badge mode="ios" color="danger" class="ion-float-right">{{securityDetail?.todayDeltaDisplay}}</ion-badge>
+            }
+            @if (securityDetail?.isTodayDeltaStatic) {
+              <ion-badge mode="ios" color="secondary" class="ion-float-right">{{securityDetail?.todayDeltaDisplay}}</ion-badge>
+            }
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+  }
+
+  <ion-grid class="ion-no-padding padding-vertical-small">
+    @if (showAuction && securityDetail?.auctionPrice) {
+      <ion-row class="ion-align-items-center ion-padding-start">
+        <ion-col size="4">
+          <ion-label class="">
+            <p class="field-heading">Auction price</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.auctionPriceChanged}">
+              @if (securityDetail?.auctionPrice) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.auctionPriceChanged}">{{securityDetail?.auctionPriceDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="4">
+          <ion-label class="">
+            <p class="field-heading">Auction quantity</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.auctionQuantityChanged}">
+              @if (securityDetail?.auctionQuantity) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.auctionQuantityChanged}">{{securityDetail?.auctionQuantityDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="4">
+          <ion-label class="">
+            <p class="field-heading">Auction remander</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.auctionRemainderChanged}">
+              @if (securityDetail?.auctionRemainder) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.auctionRemainderChanged}">{{securityDetail?.auctionRemainderDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    }
+
+    @if (showOhlc) {
+      <ion-row class="ion-align-items-center ion-padding-start">
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading">Close</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.closeChanged}">
+              @if (securityDetail?.close) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.closeChanged}">{{securityDetail?.closeDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading">Open</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.openChanged}">
+              @if (securityDetail?.open) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.openChanged}">{{securityDetail?.openDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading">High</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.highChanged}">
+              @if (securityDetail?.high) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.highChanged}">{{securityDetail?.highDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading">Low</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.lowChanged}">
+              @if (securityDetail?.low) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.lowChanged}">{{securityDetail?.lowDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    }
+
+    @if (showExtended && !securityDetail?.isIndex) {
+      <ion-row class="ion-align-items-center ion-padding-start">
+        <ion-col size="4">
+          <ion-label class="">
+            <p class="field-heading">Trades</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.numberOfTradesChanged}">
+              @if (securityDetail?.numberOfTrades) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.numberOfTradesChanged}">{{securityDetail?.numberOfTradesDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="5">
+          <ion-label class="">
+            <p class="field-heading">Volume</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.volumeChanged}">
+              @if (securityDetail?.volume) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.volumeChanged}">{{securityDetail?.volumeDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading">VWAP</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.vWAPChanged}">
+              @if (securityDetail?.vWAP) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.vWAPChanged}">{{securityDetail?.vWAPDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    }
+
+    @if (showBest && !securityDetail?.isIndex) {
+      <ion-row class="ion-align-items-center ion-padding-start">
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading text-bid">Best bid</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.bestBidChanged}">
+              @if (dataAvailableSecurity && securityDetail?.bestBid) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.bestBidChanged}">{{securityDetail?.bestBidDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading text-bid">Bid quantity</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.bidQuantityChanged}">
+              @if (dataAvailableSecurity && securityDetail?.bidQuantity) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.bidQuantityChanged}">{{securityDetail?.bidQuantityDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading text-ask">Best ask</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.bestAskChanged}">
+              @if (dataAvailableSecurity && securityDetail?.bestAsk) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.bestAskChanged}">{{securityDetail?.bestAskDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+        <ion-col size="3">
+          <ion-label class="">
+            <p class="field-heading text-ask">Ask quantity</p>
+            <div class="highlight-area" [ngClass]="{'highlight-change-area': securityDetail?.askQuantityChanged}">
+              @if (dataAvailableSecurity && securityDetail?.askQuantity) {
+                <ion-label [ngClass]="{'highlight-change': securityDetail?.askQuantityChanged}">{{securityDetail?.askQuantityDisplay}}</ion-label>
+              } @else {
+                <ion-skeleton-text class="full-skeleton"></ion-skeleton-text>
+              }
+            </div>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    }
+  </ion-grid>
+</ion-card>

@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list class="padding-vertical-none">
+    <!-- Visuals -->
+    <ion-item-divider color="primary">
+      <ion-label>Visual</ion-label>
+    </ion-item-divider>
+
+    <ion-item>
+      <ion-select interface="action-sheet" label="Theme:" mode="ios" [(ngModel)]="theme" [interfaceOptions]="themeActionSheetOptions">
+        <ion-select-option value="dark">Dark</ion-select-option>
+        <ion-select-option value="light">Light</ion-select-option>
+        <ion-select-option value="system">Same as system</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-select interface="action-sheet" label="Date and times in:" mode="ios" [(ngModel)]="displayTZ" [interfaceOptions]="tzActionSheetOptions">
+        <ion-select-option value="utc">UTC</ion-select-option>
+        <ion-select-option value="local">Local timezone</ion-select-option>
+        <ion-select-option value="source">Source timezone</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select interface="action-sheet" label="Default exchange:" mode="ios" [(ngModel)]="defaultExchange" [interfaceOptions]="exchangeActionSheetOptions">
+        @for (availExchg of availableExchanges; track availExchg) {
+          <ion-select-option [value]="availExchg.name">{{availExchg.code}}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <!-- Behaviour -->
+
+    <ion-item-divider color="primary">
+      <ion-label>Behaviour</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>Change highlight time:</ion-label>
+      <ion-label class="text-large">{{flashTimerDisplay}}</ion-label>
+    </ion-item>
+    <ion-item class="ion-no-padding">
+      <ion-range class="ion-no-padding ion-padding-horizontal" color="secondary" pin="false" min="250" max="5000" step="250" snaps="true" ticks="true" [(ngModel)]="flashTimer">
+        <ion-icon slot="start" color="secondary" size="small" name="timer-outline"></ion-icon>
+        <ion-icon slot="end" color="secondary" name="timer-outline"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-select interface="action-sheet" label="Default order grouping:" mode="ios" [(ngModel)]="defaultOrderGrouping" [interfaceOptions]="groupingActionSheetOptions">
+        <ion-select-option value="onCreate">Create date</ion-select-option>
+        <ion-select-option value="onUpdate">Updated date</ion-select-option>
+        <ion-select-option value="onAccount">Trading account</ion-select-option>
+        <ion-select-option value="onSymbol">Trading symbol</ion-select-option>
+        <ion-select-option value="onStatus">Order status</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox justify="start" labelPlacement="end" [(ngModel)]="inAppNotifications">Enable in-app Scan notifications</ion-checkbox>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

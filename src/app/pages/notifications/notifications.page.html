@@ -1,0 +1,102 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" edge="false">
+    <ion-fab-button color="secondary">
+      <ion-icon name="add-sharp" (click)="addNewNotification()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-card>
+    <ion-card-header color="secondary" class="small-padding-vertical small-padding-horizontal">
+      <ion-card-subtitle>Notifications to this device</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content class="small-padding-vertical small-padding-horizontal">
+      <ion-row class="ion-align-items-start">
+        <ion-col size="auto">
+          Push notification status:
+        </ion-col>
+        <ion-col size="auto">
+          @if (pushStatus==='Unsupported') {
+            <ion-badge color="medium">Unsupported</ion-badge>
+          }
+          @if (pushStatus==='Registered') {
+            <ion-badge color="success">Registered</ion-badge>
+          }
+          @if (pushStatus==='Blocked') {
+            <ion-badge color="medium">Blocked</ion-badge>
+          }
+          @if (pushStatus==='Unregistered') {
+            <ion-badge color="medium">Unregistered</ion-badge>
+          }
+        </ion-col>
+      </ion-row>
+
+      @if (pushStatus==='Unsupported') {
+        <ion-row class="ion-align-items-center">
+          <ion-col size="auto">
+            <ion-icon name="information-circle-outline" class="padding-top-xsmall text-large"></ion-icon>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-label>This browser currently does not support push notifications.</ion-label>
+          </ion-col>
+        </ion-row>
+      }
+      @if (pushStatus==='Blocked') {
+        Push notifications have been <strong>blocked</strong>. You will need to update the permissions for this application in the browsers settings.
+      }
+      @if (pushStatus==='Unregistered') {
+        <ion-button expand="block" fill="clear" shape="round" (click)="deviceRegistrationClick()">
+          Register now
+        </ion-button>
+      }
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list class="ion-margin-top" lines="full">
+    <ion-item-divider color="primary">
+      <ion-label>Notification channels</ion-label>
+    </ion-item-divider>
+
+    @if (!anyData) {
+      <ion-item lines="none">
+        <ion-img src="/assets/images/nodata.png" class="align-centre img-12w"></ion-img>
+      </ion-item>
+    }
+    @for (notification of viewData; track notification) {
+      <ion-item button [routerLink]="['/notifications/notification-detail', notification?.id]" detail="true">
+        <ion-row class="ion-align-items-center">
+          <ion-col size="auto">
+            <ion-icon [name]="notification.iconName" class="text-large"></ion-icon>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-label>{{notification.name}}
+              <p>{{notification.description}}</p>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="quad">
+    <ion-searchbar [color]="isViewDataFiltered?'secondary':''" placeholder="Search scans" animated autocomplete="off" autocorrect="off" debounce="250" [(ngModel)]="searchText"></ion-searchbar>
+    @if (!isViewDataFiltered) {
+      <ion-badge slot="end" color="medium" class="ion-margin-horizontal ion-padding-horizontal">{{unfilteredCount}}</ion-badge>
+    }
+    @if (isViewDataFiltered) {
+      <ion-badge slot="end" color="secondary" class="ion-margin-horizontal ion-padding-horizontal">{{filteredCount}} / {{unfilteredCount}}</ion-badge>
+    }
+  </ion-toolbar>
+</ion-footer>

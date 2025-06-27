@@ -1,0 +1,102 @@
+<ion-row class="ion-align-items-center">
+  <ion-col size="2">
+    <ion-label>
+      <p class="field-heading">Name</p>
+    </ion-label>
+  </ion-col>
+  <ion-col size="10">
+    <ion-label class="">
+      {{model.name}}
+    </ion-label>
+  </ion-col>
+</ion-row>
+
+<ion-row class="ion-align-items-center">
+  <ion-col size="2">
+    <ion-label>
+      <p class="field-heading">Description</p>
+    </ion-label>
+  </ion-col>
+  <ion-col size="10">
+    <ion-label class="">
+      {{model.description}}
+    </ion-label>
+  </ion-col>
+</ion-row>
+
+<ion-row class="ion-align-items-center">
+  <ion-col size="2">
+    <ion-label>
+      <p class="field-heading">Enabled</p>
+    </ion-label>
+  </ion-col>
+  <ion-col size="10">
+    <app-boolean-display [value]="model.enabled"></app-boolean-display>
+    <!-- <ion-checkbox justify="start" labelPlacement="end" [(ngModel)]="model.enabled" disabled="true"></ion-checkbox> -->
+  </ion-col>
+</ion-row>
+
+<ion-row class="ion-align-items-center">
+  <ion-col size="2">
+    <ion-label>
+      <p class="field-heading">Targets</p>
+    </ion-label>
+  </ion-col>
+  <ion-col size="10">
+    @if (model.isTargetMarkets) {
+      <ion-text class="selection-display text-small">Markets</ion-text>
+    }
+    @if (model.isTargetSymbols) {
+      <ion-text class="selection-display text-small">Symbols</ion-text>
+    }
+  </ion-col>
+</ion-row>
+
+<ion-row class="ion-align-items-center">
+  @if (model.isTargetMarkets) {
+    @for (target of model.selectedMarkets; track target; let isOdd = $odd) {
+      <ion-col size="5" [offset]="(isOdd ? 0 : 2)">
+        <ion-label>
+          {{target.code}}
+          <p color="medium" class="text-xsmall">{{target.name}}</p>
+        </ion-label>
+      </ion-col>
+    }
+  }
+
+  @if (model.isTargetSymbols) {
+    @for (target of model.selectedSymbols; track target; let isOdd = $odd) {
+      <ion-col size="5" [offset]="(isOdd ? 0 : 2)">
+        <ion-label>
+          {{target.code}}
+          <p color="medium" class="text-xsmall">{{target.name}}</p>
+        </ion-label>
+      </ion-col>
+    }
+  }
+</ion-row>
+
+<ion-row class="ion-align-items-center">
+  <ion-col size="2">
+    <ion-label>
+      <p class="field-heading">Notifications</p>
+    </ion-label>
+  </ion-col>
+  @if (!model.anySelectedNotifications) {
+    <ion-col size="10">
+      <ion-skeleton-text></ion-skeleton-text>
+    </ion-col>
+  } @else {
+    @for (notification of model.selectedNotifications; track notification; let isOdd = $odd; let isFirst = $first) {
+      <ion-col size="5" [offset]="(isOdd && !isFirst ? 0 : 2)">
+        <ion-label>
+          {{notification.name}}
+          <p color="medium" class="text-xsmall">{{notification.description}}</p>
+        </ion-label>
+      </ion-col>
+    }
+  }
+</ion-row>
+
+@if (complete) {
+}

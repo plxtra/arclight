@@ -1,0 +1,36 @@
+.backdrop-step {
+    background-color: var(--ion-color-quad);
+}
+
+.inactive-step {
+    background-color: var(--ion-color-quad);
+    color: var(--ion-color-primary);
+    text-align: center;
+}
+
+.active-step {
+    background-color: var(--ion-color-tertiary);
+    color: var(--ion-color-tertiary-contrast);
+    text-align: center;
+}
+
+.criteria-entry {
+    ion-select {
+        display: inline-grid;
+        width: 100%;
+        justify-content: end;
+        border: 1px solid;
+        border-color: var(--ion-color-primary);
+    }
+}
+
+.trait-row {
+    color: var(--ion-color-tertiary-tint);
+}
+
+.selection-display {
+    background-color: var(--ion-color-tertiary);
+    color: var(--ion-color-tertiary-contrast);
+    padding: 4px;
+    border-radius: 4px;
+}

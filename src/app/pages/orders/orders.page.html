@@ -1,0 +1,89 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="quad">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <app-open-orders-control></app-open-orders-control>
+    </ion-buttons>
+    <ion-title class="title-typeface">Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (!dataAvailableOrders) {
+    <ion-spinner name="lines" color="tertiary" class="spinner-centre-screen"></ion-spinner>
+  }
+
+  @if (dataAvailableOrders) {
+    <cdk-virtual-scroll-viewport itemSize="54" minBufferPx="900" maxBufferPx="1350">
+      <ion-list class="ion-no-padding">
+        <ion-item-group *cdkVirtualFor="let key of ordersKeys">
+          <ion-item-divider color="primary">
+            <ion-label>{{groupHeading(key)}}</ion-label>
+            @if (!isFiltered) {
+              <ion-badge slot="end" color="secondary" class="ion-padding-horizontal ion-margin-horizontal">{{ordersMap(key)?.length}}</ion-badge>
+            }
+            @if (isFiltered) {
+              <ion-badge slot="end" color="tertiary" class="ion-padding-horizontal ion-margin-horizontal">{{ordersMap(key)?.length}} / {{unfilteredOrdersMap(key)?.length}}</ion-badge>
+            }
+          </ion-item-divider>
+          @for (order of ordersMap(key); track order) {
+            <ion-item class="order-card" button [routerLink]="['/orders/order-detail', order?.accountZenithCode, order?.orderId]" detail="true">
+              <ion-grid class="ion-no-padding">
+                <ion-row class="ion-align-items-center">
+                  <ion-col size="3">
+                    <ion-label [color]="orderColour(order.sideId)" class="text-xlarge">{{order.side}}</ion-label>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-label>
+                      {{order.code}}
+                      <p class="text-xsmall">{{order.name}}</p>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-grid class="ion-no-padding">
+                      <ion-row class="ion-align-items-center">
+                        <ion-col size="6" class="text-right">
+                          <ion-label>{{order.placedQuantityDisplay}}</ion-label>
+                        </ion-col>
+                        <ion-col size="2" class="text-centre">
+                          <ion-label class="text-xsmall">&#64;</ion-label>
+                        </ion-col>
+                        <ion-col size="4" class="text-right">
+                          <ion-label>{{order.placedPriceDisplay}}</ion-label>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          }
+        </ion-item-group>
+      </ion-list>
+    </cdk-virtual-scroll-viewport>
+  }
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="quad">
+    <ion-grid class="ion-no-padding ion-no-margin">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="7" size-sm="8">
+          <ion-searchbar [color]="isFiltered?'secondary':''" class="small-searchbar" placeholder="Search orders" animated autocomplete="off" autocorrect="off" debounce="250" [(ngModel)]="searchText"></ion-searchbar>
+        </ion-col>
+        <ion-col size="5" size-sm="4" class="ion-text-end">
+          <ion-item color="quad">
+            <!-- <ion-icon slot="start" name="filter"></ion-icon> -->
+            <ion-select slot="end" interface="action-sheet" mode="ios" [(ngModel)]="orderGrouping" [interfaceOptions]="customActionSheetOptions">
+              <ion-select-option value="onCreate">by Newest</ion-select-option>
+              <ion-select-option value="onUpdate">by Updated</ion-select-option>
+              <ion-select-option value="onAccount">by Account</ion-select-option>
+              <ion-select-option value="onSymbol">by Symbol</ion-select-option>
+              <ion-select-option value="onStatus">by Status</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

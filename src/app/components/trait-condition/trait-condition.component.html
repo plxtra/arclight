@@ -1,0 +1,26 @@
+<!-- <p>condition - {{style}}</p> -->
+
+<ion-row class="ion-align-items-center">
+  <ion-col size="5" offset="3">
+    <ion-item class="criteria-entry">
+      <ion-select aria-label="Logical" [(ngModel)]="selectedLogic">
+        @for (logic of availableLogics; track logic) {
+          <ion-select-option [value]="logic.value">{{logic.description}}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+  </ion-col>
+  <ion-col size="2" offset="2" class="text-right">
+    <ion-button color="danger">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>
+
+@for (idx of comparisonValues; track idx) {
+  <ion-row class="ion-align-items-center">
+    <ion-col size="5" offset="5">
+      <ion-input [type]="comparisonType" class="" fill="outline" aria-label="Value1" placeholder="Value"></ion-input>
+    </ion-col>
+  </ion-row>
+}

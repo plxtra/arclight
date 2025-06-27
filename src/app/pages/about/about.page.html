@@ -1,0 +1,105 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="quad">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+            <app-open-orders-control></app-open-orders-control>
+        </ion-buttons>
+        <ion-title class="title-typeface">About</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="auto" class="">
+                <img class="" src="/assets/icons/icon-192x192.png" alt="" />
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" size-sm="4" class="ion-no-padding">
+                <ion-item lines="none">
+                    <ion-label>
+                        <p class="field-heading">Version</p>
+                        <ion-label>v{{appVersion}}</ion-label>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4" class="ion-no-padding">
+                <ion-item lines="none">
+                    <ion-label>
+                        <p class="field-heading">Build environment</p>
+                        <ion-label>{{buildEnvironment}}</ion-label>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4" class="ion-no-padding">
+                <ion-item lines="none">
+                    <ion-label>
+                        <p class="field-heading">Deployment:</p>
+                        <ion-label>{{buildDeployment}}</ion-label>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12" class="ion-no-padding">
+                <ion-item lines="none">
+                    <ion-label>
+                        <p class="field-heading">Developed by</p>
+                        <a href="https://plxtra.org">Plxtra</a>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-accordion-group class="button-spacer-top">
+        <ion-accordion>
+            <ion-item slot="header">
+                <ion-label color="secondary" class="text-small">Application management</ion-label>
+            </ion-item>
+            <ion-list slot="content">
+                <ion-item>
+                    <ion-button (click)="clearStorage()" color="danger" fill="outline">
+                        <ion-icon slot="start" name="trash"></ion-icon>
+                        Clear storage
+                    </ion-button>
+                </ion-item>
+                <ion-item>
+                    <ion-button (click)="reloadApp()" color="secondary" fill="outline">
+                        <ion-icon slot="start" name="reload-circle"></ion-icon>
+                        Reload application
+                    </ion-button>
+                </ion-item>
+
+                <!-- <ion-row>
+                    <ion-col size="9" class="ion-no-padding">
+                        <ion-item (click)="seekSymbol.open()" button>
+                            <ion-label>Lookup symbol:</ion-label>
+                            <app-seek-symbol #seekSymbol></app-seek-symbol>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-button color="secondary" fill="solid" expand="block">
+                            <ion-icon slot="end" name="return-down-back"></ion-icon>
+                            Use
+                        </ion-button>
+                    </ion-col>
+                </ion-row> -->
+
+                <!-- <ion-row>
+                    <ion-col size="12" class="ion-no-padding">
+                        <ion-item (click)="selectCulture.open()" button>
+                            <ion-label>Select culture:</ion-label>
+                            <app-select-locale #selectCulture [culture]="defaultCulture" (selectedChanged)="cultureChanged($any($event))"></app-select-locale>
+                        </ion-item>
+                    </ion-col>
+                </ion-row> -->
+            </ion-list>
+        </ion-accordion>
+    </ion-accordion-group>
+
+
+</ion-content>

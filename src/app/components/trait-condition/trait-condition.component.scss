@@ -1,0 +1,9 @@
+.criteria-entry {
+    ion-select {
+        display: inline-grid;
+        width: 100%;
+        justify-content: end;
+        border: 1px solid;
+        border-color: var(--ion-color-primary);
+    }
+}
