@@ -5,14 +5,14 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "esModuleInterop": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "es2023",
     "module": "es2022",
@@ -20,16 +20,14 @@
       "es2023",
       "dom"
     ],
-    // "useDefineForClassFields": false,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": false,
-
     "paths": {
-      // "@motifmarkets/motif-core": ["../motif-core/src/code/public-api"], // for debugging only
-      "generated-internal-api": ["src/generated/internal-api"],
-    },
+      "generated-internal-api": [
+        "src/generated/internal-api"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
