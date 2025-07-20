@@ -38,7 +38,6 @@
     "@ionic/storage-angular": "^4.0.0",
     "@pbkware/js-utils": "^0.8.1",
     "@plxtra/motif-core": "^0.9.4",
-    "angular-eslint": "^19.8.0",
     "date-fns": "^4.1.0",
     "decimal.js-light": "^2.5.1",
     "hacktimer": "^1.1.3",
@@ -56,20 +55,21 @@
     "zone.js": "^0.15.0"
   },
   "devDependencies": {
-    "@angular-eslint/builder": "^19.8.1",
-    "@angular-eslint/eslint-plugin": "^19.8.1",
-    "@angular-eslint/eslint-plugin-template": "^19.8.1",
-    "@angular-eslint/schematics": "^19.8.1",
-    "@angular-eslint/template-parser": "^19.8.1",
+    "@angular-eslint/builder": "^20.1.1",
+    "@angular-eslint/eslint-plugin": "^20.1.1",
+    "@angular-eslint/eslint-plugin-template": "^20.1.1",
+    "@angular-eslint/schematics": "^20.1.1",
+    "@angular-eslint/template-parser": "^20.1.1",
     "@angular/build": "^20.1.1",
     "@angular/cli": "^20.1.1",
     "@angular/compiler-cli": "^20.1.2",
     "@ionic/angular-toolkit": "^12.1.1",
+    "angular-eslint": "^20.1.1",
     "cpy-cli": "^5.0.0",
-    "eslint": "^9.29.0",
+    "eslint": "^9.28.0",
     "eslint-import-resolver-typescript": "^4.4.3",
     "eslint-plugin-import-x": "^4.15.2",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.34.1"
+    "typescript-eslint": "^8.33.1"
   }
 }
