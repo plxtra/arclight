@@ -11,6 +11,8 @@ import { UnifyService } from './unify.service';
   providedIn: 'root'
 })
 export class OpenIdService {
+  private readonly _configurationService = inject(ConfigurationService);
+
   public authenticationCompletedEventer: OpenIdService.AuthenticationCompletedEventer;
   public userLoadedEventer: OpenIdService.UserLoadedEventer;
   public accessTokenExpiredEventer: OpenIdService.AccessTokenExpiredEventer;
@@ -28,9 +30,7 @@ export class OpenIdService {
 
   private _userLoadedMultiEvent = new MultiEvent<OpenIdService.UserLoadedEventHandler>();
 
-  constructor(
-    private readonly _configurationService: ConfigurationService,
-  ) {
+  constructor() {
     const unifyService = inject(UnifyService);
     this._sessionInfoService = unifyService.sessionInfoService;
   }

@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy, inject } from "@angular/core";
 import { MultiEvent, UsableListChangeTypeId } from "@pbkware/js-utils";
 import { AllOrdersDataDefinition, AllOrdersDataItem, Order, OrderStatus } from "@plxtra/motif-core";
 
@@ -30,11 +30,11 @@ export class OrderMonitorService implements OnDestroy {
   private _openOrderIds: Map<string, OrderViewModel>; //https://livecodestream.dev/post/everything-you-should-know-about-javascript-dictionaries
   private _openOrdersAutoReset: UnscaledChangeAutoReset;
 
-  constructor(
-    unifyService: UnifyService,
-    bundledSvc: BundledService,
-    openIdService: OpenIdService,
-  ) {
+  constructor() {
+    const unifyService = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const openIdService = inject(OpenIdService);
+
     this._unifyService = unifyService;
     this._bundledSvc = bundledSvc;
     this._openIdService = openIdService;

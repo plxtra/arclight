@@ -2,7 +2,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import {
   IonBackButton,
   IonButtons,
@@ -22,8 +21,6 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { arrowDownCircle, arrowUpCircle, bookSharp, informationSharp, listSharp, statsChartSharp } from 'ionicons/icons';
-import { BundledService } from 'src/app/services/bundled.service';
-import { UnifyService } from 'src/app/services/unify.service';
 import { OpenOrdersControlComponent } from '../../../components/open-orders-control/open-orders-control.component';
 import { StockDetailBaseDirective } from './stock-detail.base';
 
@@ -55,12 +52,8 @@ import { StockDetailBaseDirective } from './stock-detail.base';
 })
 export class StockDetailPage extends StockDetailBaseDirective implements OnInit, OnDestroy {
 
-  constructor(
-    route: ActivatedRoute,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService
-  ) {
-    super(route, unifySvc, bundledSvc);
+  constructor() {
+    super();
 
     addIcons({
       arrowUpCircle,

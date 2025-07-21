@@ -1,5 +1,5 @@
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { MultiEvent, UsableListChangeTypeId } from '@pbkware/js-utils';
@@ -31,7 +31,11 @@ export class StatusPageComponent implements OnInit, OnDestroy {
   private _viewData: MarketViewModel[] = [];
   private _marketsListChangeSubscriptionId: MultiEvent.SubscriptionId;
 
-  constructor(unifySvc: UnifyService, bundledSvc: BundledService, clockSvc: ClockService) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const clockSvc = inject(ClockService);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._clockSvc = clockSvc;

@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, OnDestroy, Output } from "@angular/core";
+import { EventEmitter, Injectable, OnDestroy, Output, inject } from "@angular/core";
 import { AssertInternalError, MultiEvent, UsableListChangeTypeId } from "@pbkware/js-utils";
 import { BrokerageAccountOrdersDataDefinition, BrokerageAccountOrdersDataItem, Order } from "@plxtra/motif-core";
 import { BundledService } from "src/app/services/bundled.service";
@@ -26,7 +26,10 @@ export class SingleOrderCollector implements OnDestroy {
   private _subidAccountOrdersAfterRecordChange: MultiEvent.SubscriptionId;
   private _subidOrderChanged: MultiEvent.SubscriptionId;
 
-  constructor(unifySvc: UnifyService, bundledSvc: BundledService) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
   }

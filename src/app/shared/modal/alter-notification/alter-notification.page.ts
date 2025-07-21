@@ -1,5 +1,5 @@
 
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ActionSheetController, ModalController } from '@ionic/angular/standalone';
@@ -65,15 +65,15 @@ export class AlterNotificationPageComponent extends FormTemplateDirective implem
 
   private _selectedDistribution: DistributionMethodViewModel | undefined;
 
-  constructor(
-    modalController: ModalController,
-    actionSheetController: ActionSheetController,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    configSvc: ConfigurationService,
-    deviceInfoSvc: DeviceInformationService,
-    pushNotificationSvc: PushNotificationService,
-  ) {
+  constructor() {
+    const modalController = inject(ModalController);
+    const actionSheetController = inject(ActionSheetController);
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const configSvc = inject(ConfigurationService);
+    const deviceInfoSvc = inject(DeviceInformationService);
+    const pushNotificationSvc = inject(PushNotificationService);
+
     super();
     this._modalController = modalController;
     this._actionSheetController = actionSheetController;

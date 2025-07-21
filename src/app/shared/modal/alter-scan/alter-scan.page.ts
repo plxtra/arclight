@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ActionSheetButton, ActionSheetController, ModalController } from '@ionic/angular/standalone';
@@ -64,14 +64,14 @@ export class AlterScanPageComponent extends MultiSheetTemplateDirective implemen
 
   private _targetTraitConditions: TraitConditionDataModel[] = [];
 
-  constructor(
-    modalController: ModalController,
-    actionSheetController: ActionSheetController,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    clockSvc: ClockService,
-    scanEditDatamodel: ScanEditDataModel,
-  ) {
+  constructor() {
+    const modalController = inject(ModalController);
+    const actionSheetController = inject(ActionSheetController);
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const clockSvc = inject(ClockService);
+    const scanEditDatamodel = inject(ScanEditDataModel);
+
     super();
     this._modalController = modalController;
     this._actionSheetController = actionSheetController;

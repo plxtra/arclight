@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { AssertInternalError } from '@pbkware/js-utils';
 
@@ -13,7 +13,9 @@ export class LocalStorageService {
   private _dataStoreCreatedResolveFtns: LocalStorageService.DataStoreCreatedResolveFtn[] | undefined;
   private readonly _srcStorage: Storage;
 
-  constructor(storage: Storage) {
+  constructor() {
+    const storage = inject(Storage);
+
     this._srcStorage = storage;
   }
 

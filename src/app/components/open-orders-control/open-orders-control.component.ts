@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonButton, IonIcon, ModalController } from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
@@ -24,7 +24,10 @@ export class OpenOrdersControlComponent {
   private readonly _orderMonitorService: OrderMonitorService;
   private readonly _modalController: ModalController;
 
-  constructor(orderMonitorSvc: OrderMonitorService, modalController: ModalController) {
+  constructor() {
+    const orderMonitorSvc = inject(OrderMonitorService);
+    const modalController = inject(ModalController);
+
     this._orderMonitorService = orderMonitorSvc;
     this._modalController = modalController;
 

@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -71,14 +71,14 @@ export class ScanDetailPageComponent implements OnInit, OnDestroy {
   private _scan: ScanDataModel;
   private _viewDataStream: SecurityViewModel[] = [];
 
-  constructor(
-    route: ActivatedRoute,
-    router: Router,
-    unifySvc: UnifyService,
-    bundeledSvc: BundledService,
-    clockSvc: ClockService,
-    modalController: ModalController,
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const router = inject(Router);
+    const unifySvc = inject(UnifyService);
+    const bundeledSvc = inject(BundledService);
+    const clockSvc = inject(ClockService);
+    const modalController = inject(ModalController);
+
     this._route = route;
     this._router = router;
     this._unifySvc = unifySvc;

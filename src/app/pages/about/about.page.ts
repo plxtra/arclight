@@ -32,12 +32,12 @@ export class AboutPageComponent {
   private readonly _toastController: ToastController;
   private readonly _pushNotificationService: PushNotificationService;
 
-  constructor(
-    userSessionService: UserSessionService,
-    localStorage: LocalStorageService,
-    toastController: ToastController,
-    pushNotificationService: PushNotificationService,
-  ) {
+  constructor() {
+    const userSessionService = inject(UserSessionService);
+    const localStorage = inject(LocalStorageService);
+    const toastController = inject(ToastController);
+    const pushNotificationService = inject(PushNotificationService);
+
     const unifyService = inject(UnifyService);
     this._marketsService = unifyService.marketsService;
     this._userSessionService = userSessionService;

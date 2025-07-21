@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MultiEvent, UsableListChangeTypeId } from '@pbkware/js-utils';
 import { AllOrdersDataDefinition, AllOrdersDataItem, Order, OrderSideId } from '@plxtra/motif-core';
 
@@ -58,10 +58,10 @@ export class OrdersPageComponent implements OnInit, OnDestroy {
   private _searchText = "";
   private _orderGrouping: OrderGrouping;
 
-  constructor(
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-  ) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._viewModelMap = new Map<string, OrderViewModel>();

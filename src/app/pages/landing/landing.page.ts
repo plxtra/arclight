@@ -52,12 +52,12 @@ export class LandingPageComponent implements AfterViewInit {
   private readonly _pwaSvc: PwaService;
   private readonly _configurationService: ConfigurationService;
 
-  constructor(
-    router: Router,
-    alertController: AlertController,
-    pwaSvc: PwaService,
-    configurationService: ConfigurationService,
-  ) {
+  constructor() {
+    const router = inject(Router);
+    const alertController = inject(AlertController);
+    const pwaSvc = inject(PwaService);
+    const configurationService = inject(ConfigurationService);
+
     this._router = router;
     this._alertCtl = alertController;
     const unifyService = inject(UnifyService);

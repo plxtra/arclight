@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { AlertButton, AlertController } from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
@@ -17,7 +17,10 @@ export class PwaUpdateService {
   private _reminder: RemindState = RemindState.None;
   private readonly _alertButtonList: AlertButton[];
 
-  constructor(updates: SwUpdate, alertController: AlertController) {
+  constructor() {
+    const updates = inject(SwUpdate);
+    const alertController = inject(AlertController);
+
     this._swUpdate = updates;
     this._alertController = alertController;
 

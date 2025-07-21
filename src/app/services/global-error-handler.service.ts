@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable } from "@angular/core";
+import { ErrorHandler, Injectable, inject } from "@angular/core";
 import { ToastController } from '@ionic/angular/standalone';
 import { InternalError } from '@pbkware/js-utils';
 import { Subject, distinctUntilChanged } from "rxjs";
@@ -8,13 +8,14 @@ import { LogService } from './log-service';
   providedIn: 'root'
 })
 export class GlobalErrorHandler implements ErrorHandler {
+  private readonly _logService = inject(LogService);
+
   private readonly _errorSubject: Subject<string>;
   private readonly NOERROR = 'NOERROR';
 
-  constructor(
-    private readonly _logService: LogService,
-    toastController: ToastController,
-  ) {
+  constructor() {
+    const toastController = inject(ToastController);
+
     this._errorSubject = new Subject<string>();
     this._errorSubject.pipe(distinctUntilChanged())
       .subscribe(errMsg => {

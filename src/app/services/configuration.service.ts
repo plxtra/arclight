@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IndexSignatureHack, Json, createRandomUrlSearch } from '@pbkware/js-utils';
 import { ConfigError, ErrorCode, ErrorCodeLogger, MarketIvemId, MarketsConfig, NotificationDistributionMethodId, ZenithPublisherSubscriptionManager } from '@plxtra/motif-core';
@@ -8,11 +8,9 @@ import { Config } from './config';
   providedIn: 'root'
 })
 export class ConfigurationService {
+  private readonly _domSanitizer = inject(DomSanitizer);
+
   private _config: Config;
-
-  constructor(private readonly _domSanitizer: DomSanitizer) {
-
-  }
 
   public get config(): Config { return this._config; }
 

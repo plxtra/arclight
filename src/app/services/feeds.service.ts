@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Feed, FeedClassId, FeedsDataDefinition, FeedsDataItem } from '@plxtra/motif-core';
 import { UnifyService } from './unify.service';
 
@@ -8,9 +8,9 @@ import { UnifyService } from './unify.service';
 export class FeedsService {
   readonly scanner: Feed | undefined;
 
-  constructor(
-    unifyService: UnifyService,
-  ) {
+  constructor() {
+    const unifyService = inject(UnifyService);
+
     // make sure not created in UserSessionService or any services used by it
     // Expect all feeds to have been retrieved before this service is created
     const adiService = unifyService.adi;

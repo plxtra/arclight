@@ -6,11 +6,8 @@ import { OpenIdService } from './open-id-service';
   providedIn: 'root'
 })
 export class AuthenticationGuardService {
+  private readonly _openIdService = inject(OpenIdService);
 
-  constructor(
-    private readonly _openIdService: OpenIdService,
-  ) {
-  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this._openIdService.isLoggedIn()) {

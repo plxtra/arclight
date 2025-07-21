@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -41,12 +41,12 @@ export class NotificationDetailPageComponent implements OnInit {
   private _model: NotificationViewModel;
   private _viewDataAttachedScans: ScanViewModel[] = [];
 
-  constructor(
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    route: ActivatedRoute,
-    router: Router,
-  ) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const route = inject(ActivatedRoute);
+    const router = inject(Router);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._route = route;

@@ -1,6 +1,6 @@
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IonSearchbar } from '@ionic/angular/standalone';
@@ -42,9 +42,9 @@ export class SelectLocaleComponent implements OnInit {
   private _selected: CultureViewModel | undefined = undefined;
   private _isOpen = false;
 
-  constructor(
-    localeSvc: LocaleService,
-  ) {
+  constructor() {
+    const localeSvc = inject(LocaleService);
+
     this._localeSvc = localeSvc;
 
     addIcons({

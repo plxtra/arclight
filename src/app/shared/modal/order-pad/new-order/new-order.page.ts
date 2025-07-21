@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
@@ -120,11 +120,11 @@ export class NewOrderPageComponent implements OnInit, OnDestroy {
   private _placedTax = "";
   private _placedValue = "";
 
-  constructor(
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    modalController: ModalController
-  ) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const modalController = inject(ModalController);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._modalController = modalController;

@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy, inject } from "@angular/core";
 import { ModalController } from '@ionic/angular/standalone';
 import { MultiEvent } from '@pbkware/js-utils';
 import { SessionStateId } from "@plxtra/motif-core";
@@ -14,10 +14,10 @@ export class ConnectionMonitorService implements OnDestroy {
 
   private _modal: HTMLIonModalElement;
 
-  constructor(
-    sessionSvc: UserSessionService,
-    modalCtl: ModalController
-  ) {
+  constructor() {
+    const sessionSvc = inject(UserSessionService);
+    const modalCtl = inject(ModalController);
+
     this._sessionSvc = sessionSvc;
     this._modalCtl = modalCtl;
     this._subidStateChange = this._sessionSvc.onStateChange.subscribe((state) => this.handleStateChange(state));

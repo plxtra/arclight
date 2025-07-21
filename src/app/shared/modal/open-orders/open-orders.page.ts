@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AccordionGroupCustomEvent, ModalController } from '@ionic/angular/standalone';
@@ -32,10 +32,10 @@ export class OpenOrdersPageComponent {
   private _selectedOrderId: zstring;
   private _selectedAccountId: zstring;
 
-  constructor(
-    modalController: ModalController,
-    orderMonitorSvc: OrderMonitorService
-  ) {
+  constructor() {
+    const modalController = inject(ModalController);
+    const orderMonitorSvc = inject(OrderMonitorService);
+
     this._orderMonitorService = orderMonitorSvc;
     this._modalController = modalController;
 

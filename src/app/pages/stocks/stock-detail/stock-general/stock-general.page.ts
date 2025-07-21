@@ -1,13 +1,10 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
-import { BundledService } from 'src/app/services/bundled.service';
-import { UnifyService } from 'src/app/services/unify.service';
 import { NewOrderPageComponent } from 'src/app/shared/modal/order-pad/new-order/new-order.page';
 import { NewOrderPlacementTransferModel } from 'src/app/shared/models/transfer/new-order-placement.transfermodel';
 import { ToastService } from '../../../../services/toast.service';
@@ -25,16 +22,15 @@ import { StockDetailBaseDirective } from '../stock-detail.base';
   ],
 })
 export class StockGeneralPageComponent extends StockDetailBaseDirective implements OnInit, OnDestroy {
+  private readonly _toastService = inject(ToastService);
+
   private readonly _modalController: ModalController;
 
-  constructor(
-    route: ActivatedRoute,
-    private readonly _toastService: ToastService,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    modalController: ModalController
-  ) {
-    super(route, unifySvc, bundledSvc);
+  constructor() {
+    const modalController = inject(ModalController);
+
+    super();
+
     this._modalController = modalController;
   }
 

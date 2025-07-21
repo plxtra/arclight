@@ -1,5 +1,5 @@
 
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -33,6 +33,8 @@ import { FeedsService } from '../../services/feeds.service';
   ],
 })
 export class ScansPageComponent extends ListDataTemplateDirective<ScanViewModel> implements OnDestroy {
+  private readonly _cdr = inject(ChangeDetectorRef);
+
   public feedActive: boolean; // will be initialised in constructor
 
   private readonly _unifySvc: UnifyService;
@@ -50,17 +52,16 @@ export class ScansPageComponent extends ListDataTemplateDirective<ScanViewModel>
 
   private _anyScans = false;
 
-  constructor(
-    private readonly _cdr: ChangeDetectorRef,
-    modalController: ModalController,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    alertController: AlertController,
-    configSvc: ConfigurationService,
-    sessionSvc: UserSessionService,
-    lockerHandleService: LockerHandleService,
-    feedsService: FeedsService,
-  ) {
+  constructor() {
+    const modalController = inject(ModalController);
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const alertController = inject(AlertController);
+    const configSvc = inject(ConfigurationService);
+    const sessionSvc = inject(UserSessionService);
+    const lockerHandleService = inject(LockerHandleService);
+    const feedsService = inject(FeedsService);
+
     super();
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;

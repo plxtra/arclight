@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -37,13 +37,11 @@ export class OrderDetailPageComponent implements OnInit {
   private _accountZenithCode: string;
   private _orderId: string;
 
-  constructor(
-    route: ActivatedRoute,
-    unifySvc: UnifyService,
-    bundeledSvc: BundledService,
-    modalController: ModalController,
-    singleOrderCollector: SingleOrderCollector,
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const modalController = inject(ModalController);
+    const singleOrderCollector = inject(SingleOrderCollector);
+
     this._route = route;
     this._modalController = modalController;
     this._singleOrderCollector = singleOrderCollector;

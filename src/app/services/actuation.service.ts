@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { AssertInternalError, Integer, MultiEvent, UsableListChangeTypeId } from "@pbkware/js-utils";
 import { DataIvemIdMatchesDataDefinition, DataIvemIdScanMatchesDataItem, ScansService } from "@plxtra/motif-core";
 import { UnifyService } from "./unify.service";
@@ -18,9 +18,9 @@ export class ActuationService {
 
   private _activated = false;
 
-  constructor(
-    unifySvc: UnifyService,
-  ) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+
     this._unifySvc = unifySvc;
     this._scansSvc = unifySvc.scansService;
 

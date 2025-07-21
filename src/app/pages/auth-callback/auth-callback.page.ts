@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ViewDidEnter } from '@ionic/angular/standalone';
@@ -19,10 +19,10 @@ import { ToastService } from '../../services/toast.service';
   ],
 })
 export class AuthCallbackPageComponent implements ViewDidEnter {
-  constructor(
-    private readonly _toastService: ToastService,
-    private readonly _openIdService: OpenIdService,
-  ) {
+  private readonly _toastService = inject(ToastService);
+  private readonly _openIdService = inject(OpenIdService);
+
+  constructor() {
     addIcons({
       refreshCircle,
     });

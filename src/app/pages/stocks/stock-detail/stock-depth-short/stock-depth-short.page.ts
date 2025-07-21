@@ -1,13 +1,10 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { DepthLevelsDataDefinition, DepthLevelsDataItem, DepthStyleId, OrderSideId, SecurityDataItem, ShortDepthSideGridRecordStore } from '@plxtra/motif-core';
-import { BundledService } from 'src/app/services/bundled.service';
-import { UnifyService } from 'src/app/services/unify.service';
 import { UserSessionService } from 'src/app/services/user-session.service';
 import { ShortDepthHousing } from 'src/app/shared/housing/shortdepth-housing';
 import { ShortDepthViewData } from 'src/app/shared/models/view/shortdepth.viewmodel';
@@ -43,14 +40,12 @@ export class StockDepthShortPageComponent extends StockDetailBaseDirective imple
 
   private _skeletonList: ShortDepthViewData[];
 
-  constructor(
-    route: ActivatedRoute,
-    cdr: ChangeDetectorRef,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    sessionSvc: UserSessionService,
-  ) {
-    super(route, unifySvc, bundledSvc);
+  constructor() {
+    const cdr = inject(ChangeDetectorRef);
+    const sessionSvc = inject(UserSessionService);
+
+    super();
+
     this._sessionService = sessionSvc;
 
     cdr.detach();

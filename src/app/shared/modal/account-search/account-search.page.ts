@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
@@ -38,11 +38,11 @@ export class AccountSearchPageComponent implements OnInit, OnDestroy {
 
   private _searchText = "";
 
-  constructor(
-    modalController: ModalController,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService
-  ) {
+  constructor() {
+    const modalController = inject(ModalController);
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._modalController = modalController;

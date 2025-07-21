@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable, isDevMode, inject } from '@angular/core';
 import { checkLimitTextLength, CommaText, getOrCreateLoggerGlobalAlias, Logger, newNowDate, UnreachableCaseError } from '@pbkware/js-utils';
 import { StringId, Strings } from '@plxtra/motif-core';
 import { ILogger } from 'oidc-client-ts';
@@ -14,13 +14,13 @@ declare global {
   providedIn: 'root'
 })
 export class LogService implements ILogger {
+  private readonly _telemetryService = inject(TelemetryService);
+
   private readonly _devMode = isDevMode();
   private _logEventerForStartup: LogService.LogEventerForStartup | undefined;
   private _queuedStartupEntries: LogService.StartupEntry[] | undefined = [];
 
-  constructor(
-    private readonly _telemetryService: TelemetryService
-  ) {
+  constructor() {
     const motifLogger = getOrCreateLoggerGlobalAlias('motifLogger'); // required for motif-core
     motifLogger.setLogEventer((logEvent) => this.processLogEvent(logEvent));
     const arclightLogger = getOrCreateLoggerGlobalAlias('arclightLogger');

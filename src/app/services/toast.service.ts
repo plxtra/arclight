@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ToastController } from '@ionic/angular/standalone';
 import { AssertInternalError, UnreachableCaseError } from '@pbkware/js-utils';
 
@@ -8,7 +8,9 @@ import { AssertInternalError, UnreachableCaseError } from '@pbkware/js-utils';
 export class ToastService {
   private readonly _toastController: ToastController;
 
-  constructor(toastController: ToastController) {
+  constructor() {
+    const toastController = inject(ToastController);
+
     this._toastController = toastController;
   }
 

@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AssertInternalError,
@@ -31,6 +31,10 @@ import { UnifyService } from './unify.service';
   providedIn: 'root'
 })
 export class UserSessionService implements OnDestroy {
+  private readonly _toastService = inject(ToastService);
+  private readonly _personalisationService = inject(PersonalisationService);
+  private readonly _openIdService = inject(OpenIdService);
+
   public onStateChange = new MultiEvent<UserSessionService.StateChangeEventHandler>();
 
   private readonly _unifyService: UnifyService;
@@ -53,15 +57,12 @@ export class UserSessionService implements OnDestroy {
 
   private _consolidatedLogMultiEvent = new MultiEvent<UserSessionService.ConsolidatedLogEventHandler>();
 
-  constructor(
-    router: Router,
-    private readonly _toastService: ToastService,
-    unifyService: UnifyService,
-    logService: LogService,
-    configurationService: ConfigurationService,
-    private readonly _personalisationService: PersonalisationService,
-    private readonly _openIdService: OpenIdService,
-  ) {
+  constructor() {
+    const router = inject(Router);
+    const unifyService = inject(UnifyService);
+    const logService = inject(LogService);
+    const configurationService = inject(ConfigurationService);
+
     Log.setLevel(Log.INFO);
     Log.setLogger(logService);
 

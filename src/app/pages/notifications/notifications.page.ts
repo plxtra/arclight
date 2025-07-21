@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -45,15 +45,15 @@ export class NotificationsPageComponent extends ListDataTemplateDirective<Notifi
   private _subidNotificationsEndChanges: MultiEvent.SubscriptionId;
   private _subidCorrectnessChange: MultiEvent.SubscriptionId;
 
-  constructor(
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    pushNotificationSvc: PushNotificationService,
-    alertController: AlertController,
-    configSvc: ConfigurationService,
-    sessionSvc: UserSessionService,
-    modalController: ModalController,
-  ) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const pushNotificationSvc = inject(PushNotificationService);
+    const alertController = inject(AlertController);
+    const configSvc = inject(ConfigurationService);
+    const sessionSvc = inject(UserSessionService);
+    const modalController = inject(ModalController);
+
     super();
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;

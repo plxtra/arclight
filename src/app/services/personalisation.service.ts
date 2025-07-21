@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { getErrorMessage, MultiEvent, SourceTzOffsetDateTime } from '@pbkware/js-utils';
 import { Exchange, ZenithEnvironmentedValueParts } from '@plxtra/motif-core';
 import { Subject } from 'rxjs';
@@ -37,14 +37,14 @@ export class PersonalisationService {
   private readonly _debounceSave: Subject<void>;
   private readonly msDelaySave: number = 750;
 
-  constructor(
-    configSvc: ConfigurationService,
-    openIdSvc: OpenIdService,
-    themeSvc: ThemeService,
-    localStorageSvc: LocalStorageService,
-    unifySvc: UnifyService,
-    actuationSvc: ActuationService,
-  ) {
+  constructor() {
+    const configSvc = inject(ConfigurationService);
+    const openIdSvc = inject(OpenIdService);
+    const themeSvc = inject(ThemeService);
+    const localStorageSvc = inject(LocalStorageService);
+    const unifySvc = inject(UnifyService);
+    const actuationSvc = inject(ActuationService);
+
     this._configurationService = configSvc;
     this._openIdService = openIdSvc;
     this._themeSvc = themeSvc;

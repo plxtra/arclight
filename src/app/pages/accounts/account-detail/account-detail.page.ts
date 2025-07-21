@@ -1,5 +1,5 @@
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -69,12 +69,12 @@ export class AccountDetailPageComponent implements OnInit, OnDestroy {
   private _viewDataHoldings: HoldingViewModel[] = [];
   private _viewDataOrders: OrderViewModel[] = [];
 
-  constructor(
-    route: ActivatedRoute,
-    unifySvc: UnifyService,
-    bundeledSvc: BundledService,
-    modalController: ModalController
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const unifySvc = inject(UnifyService);
+    const bundeledSvc = inject(BundledService);
+    const modalController = inject(ModalController);
+
     this._route = route;
     this._unifySvc = unifySvc;
     this._bundledSvc = bundeledSvc;

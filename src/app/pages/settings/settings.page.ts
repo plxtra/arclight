@@ -1,5 +1,5 @@
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ActionSheetOptions, PickerController } from '@ionic/angular/standalone';
@@ -75,15 +75,14 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   private _flashTimer: number = PersonalisationService.default_highlighTime;
   private _inAppNotifications: boolean;
 
-  constructor(
-    personalisationSvc: PersonalisationService,
-    themeSvc: ThemeService,
-    toastService: ToastService,
-    unifySvc: UnifyService,
-    localeSvc: LocaleService,
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    pickerController: PickerController
-  ) {
+  constructor() {
+    const personalisationSvc = inject(PersonalisationService);
+    const themeSvc = inject(ThemeService);
+    const toastService = inject(ToastService);
+    const unifySvc = inject(UnifyService);
+    const localeSvc = inject(LocaleService);
+    const pickerController = inject(PickerController);
+
     this._personalisationSvc = personalisationSvc;
     this._themeSvc = themeSvc;
     this._toastService = toastService;

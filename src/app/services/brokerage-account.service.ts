@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AdiService, BrokerageAccount, BrokerageAccountsDataDefinition, BrokerageAccountsDataItem } from '@plxtra/motif-core';
 import { UnifyService } from './unify.service';
 
@@ -10,7 +10,9 @@ export class BrokerageAccountService {
 
   private _tradingAccountsDI: BrokerageAccountsDataItem | undefined;
 
-  constructor(unifySvc: UnifyService) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+
     this._adiSvc = unifySvc.adi;
     this.subscribeToTradingAccounts();
   }

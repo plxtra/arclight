@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IonInput, ModalController, SegmentCustomEvent, ViewDidEnter } from '@ionic/angular/standalone';
@@ -43,11 +43,11 @@ export class SymbolSearchPageComponent implements OnInit, OnDestroy, ViewDidEnte
 
   private _searched = false;
 
-  constructor(
-    modalController: ModalController,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService
-  ) {
+  constructor() {
+    const modalController = inject(ModalController);
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._modalController = modalController;

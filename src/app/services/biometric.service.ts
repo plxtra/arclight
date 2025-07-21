@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { filter, map, pairwise, timeInterval } from "rxjs/operators";
 import { DisplayStateService } from "./display-state.service";
 
@@ -9,9 +9,9 @@ export class BiometricService {
   private readonly _displayStateService: DisplayStateService;
   private readonly lockAfterSec: number = 60;
 
-  constructor(
-    displayStateSvc: DisplayStateService,
-  ) {
+  constructor() {
+    const displayStateSvc = inject(DisplayStateService);
+
     this._displayStateService = displayStateSvc;
 
     this._displayStateService.MobileFocusStream

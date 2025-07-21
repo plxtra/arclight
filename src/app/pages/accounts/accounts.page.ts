@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
@@ -36,10 +36,10 @@ export class AccountsPageComponent extends ListDataTemplateDirective<AccountView
   private _subidEndChanges: MultiEvent.SubscriptionId;
   private _skeletonList: AccountViewModel.Skeleton[];
 
-  constructor(
-    unifySvc: UnifyService,
-    bundledSvc: BundledService
-  ) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+
     super();
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;

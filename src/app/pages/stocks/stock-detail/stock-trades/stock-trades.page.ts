@@ -1,16 +1,13 @@
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { DayTradesDataDefinition, DayTradesDataItem, DayTradesGridRecordStore } from '@plxtra/motif-core';
 import { parseISO } from 'date-fns';
 import { addIcons } from 'ionicons';
 import { calendarSharp } from 'ionicons/icons';
-import { BundledService } from 'src/app/services/bundled.service';
-import { UnifyService } from 'src/app/services/unify.service';
 import { TradesHousing } from 'src/app/shared/housing/trades-housing';
 import { ThrottledChangeDetector } from 'src/app/shared/types/throttled-change-detector';
 import { DayTradesViewData } from '../../../../shared/models/view/daytrade.viewmodel';
@@ -46,13 +43,10 @@ export class StockTradesPageComponent extends StockDetailBaseDirective implement
   // https://github.com/angular/components/issues/14833#issuecomment-1023341138
   private _cdkVirtualScrollViewport: CdkVirtualScrollViewport | undefined;
 
-  constructor(
-    route: ActivatedRoute,
-    cdr: ChangeDetectorRef,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService
-  ) {
-    super(route, unifySvc, bundledSvc);
+  constructor() {
+    const cdr = inject(ChangeDetectorRef);
+
+    super();
 
     cdr.detach();
     this._tcd = new ThrottledChangeDetector(cdr);

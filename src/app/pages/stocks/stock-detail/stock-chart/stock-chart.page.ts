@@ -1,8 +1,7 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SourceTzOffsetDateTime } from '@pbkware/js-utils';
 import {
@@ -31,9 +30,7 @@ import { addIcons } from 'ionicons';
 import { constructSharp } from 'ionicons/icons';
 import { Subject } from 'rxjs';
 import { bufferTime } from 'rxjs/operators';
-import { BundledService } from 'src/app/services/bundled.service';
 import { ThemeService } from 'src/app/services/theme.service';
-import { UnifyService } from 'src/app/services/unify.service';
 import { SourceTzOffsetDateTimeExt } from 'src/app/shared/types/shared-types';
 import { StockDetailBaseDirective } from '../stock-detail.base';
 
@@ -72,13 +69,10 @@ export class StockChartPageComponent extends StockDetailBaseDirective implements
   private readonly _redrawThrottleLast: Subject<SeriesChangeEvent>;
   private readonly _redrawThrottlePeriodMs: number = 500;
 
-  constructor(
-    route: ActivatedRoute,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    themseSvc: ThemeService
-  ) {
-    super(route, unifySvc, bundledSvc);
+  constructor() {
+    const themeSvc = inject(ThemeService);
+
+    super();
 
     StockCharts.default(Highcharts);
 
@@ -99,7 +93,7 @@ export class StockChartPageComponent extends StockDetailBaseDirective implements
     this._displayTZ = this._bundledSvc.personalisationService.displayTimeZoneToModeId();
 
     Highcharts.setOptions(Highcharts.defaultOptions);
-    if (themseSvc.queryDarkTheme())
+    if (themeSvc.queryDarkTheme())
       ExampleDarkTheme.default(Highcharts);
 
     // if (themseSvc.queryDarkTheme())

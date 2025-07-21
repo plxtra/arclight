@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { IDeviceInfo } from "../shared/models/site/device-information.model";
 
 @Injectable({
@@ -9,9 +9,9 @@ export class DeviceInformationService {
 
   private _deviceInfo: IDeviceInfo = {} as IDeviceInfo;
 
-  constructor(
-    @Inject('BASE_URL') baseUrl: string,
-  ) {
+  constructor() {
+    const baseUrl = inject<string>('BASE_URL' as any);
+
     this._baseUrl = baseUrl;
   }
 

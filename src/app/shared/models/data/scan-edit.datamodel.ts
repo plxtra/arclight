@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { ScanEditor } from "@plxtra/motif-core";
 import { BundledService } from "src/app/services/bundled.service";
@@ -26,12 +26,12 @@ export class ScanEditDataModel {
   private _initialised = false;
   private _scanEditor: ScanEditor;
 
-  constructor(
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    clockSvc: ClockService,
-    lockerHandleService: LockerHandleService,
-  ) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const clockSvc = inject(ClockService);
+    const lockerHandleService = inject(LockerHandleService);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._clockSvc = clockSvc;

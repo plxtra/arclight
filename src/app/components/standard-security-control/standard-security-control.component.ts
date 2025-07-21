@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { MultiEvent } from '@pbkware/js-utils';
@@ -42,10 +42,10 @@ export class StandardSecurityControlComponent implements OnDestroy {
 
   private _securityCode: string;
 
-  constructor(
-    unifySvc: UnifyService,
-    bundledSvc: BundledService
-  ) {
+  constructor() {
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     // defaults

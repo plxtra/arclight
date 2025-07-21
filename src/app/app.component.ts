@@ -1,5 +1,5 @@
 
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import {
   IonApp,
@@ -64,6 +64,8 @@ import { UnifyService } from './services/unify.service';
   ],
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  private readonly _platform = inject(Platform);
+
   readonly version: string = packageJson.version;
   readonly beta: boolean;
 
@@ -91,18 +93,17 @@ export class AppComponent implements OnInit, AfterViewInit {
   private readonly _configurationService: ConfigurationService;
   private readonly _connectionMonitorService: ConnectionMonitorService;
 
-  constructor(
-    router: Router,
-    activatedRoute: ActivatedRoute,
-    openIdService: OpenIdService,
-    themeService: ThemeService,
-    pwaService: PwaService,
-    localStorageService: LocalStorageService,
-    unifyService: UnifyService,
-    configurationService: ConfigurationService,
-    connectionMonitorService: ConnectionMonitorService,
-    private readonly _platform: Platform,
-  ) {
+  constructor() {
+    const router = inject(Router);
+    const activatedRoute = inject(ActivatedRoute);
+    const openIdService = inject(OpenIdService);
+    const themeService = inject(ThemeService);
+    const pwaService = inject(PwaService);
+    const localStorageService = inject(LocalStorageService);
+    const unifyService = inject(UnifyService);
+    const configurationService = inject(ConfigurationService);
+    const connectionMonitorService = inject(ConnectionMonitorService);
+
     this._router = router;
     this._activatedRoute = activatedRoute;
     this._localStorageService = localStorageService;

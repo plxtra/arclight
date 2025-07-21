@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { DecimalFactory } from '@pbkware/js-utils';
 import {
     AdiService,
@@ -25,9 +25,9 @@ export class UnifyService implements OnDestroy {
   private readonly _coreService: CoreService;
   private readonly _sessionInfoService: SessionInfoService;
 
-  constructor(
-    decimalFactoryService: DecimalFactoryService,
-  ) {
+  constructor() {
+    const decimalFactoryService = inject(DecimalFactoryService);
+
     this._coreService = new CoreService(decimalFactoryService);
     this._sessionInfoService = new SessionInfoService();
   }

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { SwPush } from "@angular/service-worker";
 import { AssertInternalError, getErrorMessage } from '@pbkware/js-utils';
 import { PushStatus } from "../shared/types/push-status";
@@ -16,10 +16,10 @@ export class PushNotificationService {
 
   private _subscription: PushSubscriptionJSON | undefined = undefined;
 
-  constructor(
-    swPush: SwPush,
-    configSvc: ConfigurationService,
-  ) {
+  constructor() {
+    const swPush = inject(SwPush);
+    const configSvc = inject(ConfigurationService);
+
     this._swPush = swPush;
     this._configSvc = configSvc;
 

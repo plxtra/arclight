@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MarketsService, SymbolDetailCacheService, SymbolsService } from '@plxtra/motif-core';
 import { BrokerageAccountService } from './brokerage-account.service';
 import { PersonalisationService } from './personalisation.service';
@@ -12,11 +12,11 @@ export class BundledService {
   private readonly _personalisationSvc: PersonalisationService;
   private readonly _unifySvc: UnifyService;
 
-  constructor(
-    brokerageAccountSvc: BrokerageAccountService,
-    personalisationSvc: PersonalisationService,
-    unifySvc: UnifyService,
-  ) {
+  constructor() {
+    const brokerageAccountSvc = inject(BrokerageAccountService);
+    const personalisationSvc = inject(PersonalisationService);
+    const unifySvc = inject(UnifyService);
+
     this._brokerageAccountSvc = brokerageAccountSvc;
     this._personalisationSvc = personalisationSvc;
     this._unifySvc = unifySvc;

@@ -1,4 +1,4 @@
-import { Directive, OnDestroy, OnInit } from "@angular/core";
+import { Directive, OnDestroy, OnInit, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MultiEvent } from '@pbkware/js-utils';
 import { SecurityDataDefinition, SecurityDataItem } from "@plxtra/motif-core";
@@ -22,11 +22,11 @@ export abstract class StockDetailBaseDirective implements OnInit, OnDestroy {
   private _subidFieldValuesChanged: MultiEvent.SubscriptionId;
   private _viewData: SecurityViewModel;
 
-  constructor(
-    route: ActivatedRoute,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+
     this._route = route;
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;

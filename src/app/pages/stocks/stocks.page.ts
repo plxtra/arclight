@@ -132,15 +132,15 @@ export class StocksPageComponent implements OnDestroy {
   private readonly scrollingContent = viewChild.required<IonContent>('content');
   private readonly _reorderGroupViewChildSignal = viewChild<IonReorderGroup>('reorderGroup');
 
-  constructor(
-    modalController: ModalController,
-    unifySvc: UnifyService,
-    bundledSvc: BundledService,
-    toastController: ToastController,
-    configSvc: ConfigurationService,
-    localStorageSvc: LocalStorageService,
-    personalisationService: PersonalisationService,
-  ) {
+  constructor() {
+    const modalController = inject(ModalController);
+    const unifySvc = inject(UnifyService);
+    const bundledSvc = inject(BundledService);
+    const toastController = inject(ToastController);
+    const configSvc = inject(ConfigurationService);
+    const localStorageSvc = inject(LocalStorageService);
+    const personalisationService = inject(PersonalisationService);
+
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._modalController = modalController;
