@@ -38,7 +38,7 @@ const bootstrapPromise = bootstrapApplication(
   AppComponent,
   {
     providers: [
-      { provide: 'BASE_URL', useFactory: getBaseUrl },
+      { provide: DeviceInformationService.BASE_URL, useFactory: getBaseUrl },
       { provide: APP_ID,  useValue: 'ng-cli-universal' }, // probably not needed https://stackoverflow.com/questions/76452844/angular-universal-browsermodule-withservertransition-is-deprecated-what-is-the
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
       provideIonicAngular(),

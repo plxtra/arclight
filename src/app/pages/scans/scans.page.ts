@@ -33,9 +33,9 @@ import { FeedsService } from '../../services/feeds.service';
   ],
 })
 export class ScansPageComponent extends ListDataTemplateDirective<ScanViewModel> implements OnDestroy {
-  private readonly _cdr = inject(ChangeDetectorRef);
-
   public feedActive: boolean; // will be initialised in constructor
+
+  private readonly _cdr = inject(ChangeDetectorRef);
 
   private readonly _unifySvc: UnifyService;
   private readonly _scansSvc: ScansService;

@@ -64,8 +64,6 @@ import { UnifyService } from './services/unify.service';
   ],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  private readonly _platform = inject(Platform);
-
   readonly version: string = packageJson.version;
   readonly beta: boolean;
 
@@ -82,6 +80,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     { title: 'About', url: '/about', icon: 'information' },
     { title: 'Logout', url: '/signout', icon: 'log-out' },
   ];
+
+  private readonly _platform = inject(Platform);
 
   private readonly _router: Router;
   private readonly _activatedRoute: ActivatedRoute;

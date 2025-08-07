@@ -31,11 +31,11 @@ import { UnifyService } from './unify.service';
   providedIn: 'root'
 })
 export class UserSessionService implements OnDestroy {
+  public onStateChange = new MultiEvent<UserSessionService.StateChangeEventHandler>();
+
   private readonly _toastService = inject(ToastService);
   private readonly _personalisationService = inject(PersonalisationService);
   private readonly _openIdService = inject(OpenIdService);
-
-  public onStateChange = new MultiEvent<UserSessionService.StateChangeEventHandler>();
 
   private readonly _unifyService: UnifyService;
   private readonly _router: Router;

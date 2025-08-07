@@ -11,12 +11,12 @@ import { UnifyService } from './unify.service';
   providedIn: 'root'
 })
 export class OpenIdService {
-  private readonly _configurationService = inject(ConfigurationService);
-
   public authenticationCompletedEventer: OpenIdService.AuthenticationCompletedEventer;
   public userLoadedEventer: OpenIdService.UserLoadedEventer;
   public accessTokenExpiredEventer: OpenIdService.AccessTokenExpiredEventer;
   public silentRenewErrorEventer: OpenIdService.SilentRenewErrorEventer;
+
+  private readonly _configurationService = inject(ConfigurationService);
 
   private readonly _sessionInfoService: SessionInfoService;
 

@@ -52,10 +52,10 @@ export default tseslint.config(
                 checkLoops: false,
             }],
 
-            // "@typescript-eslint/no-unnecessary-boolean-literal-compare": "off", // by default is "error" but needs strict-null-checks
-            // "@typescript-eslint/no-non-null-assertion": "off", // by default is "error".  Remove when strict-null-checks are enabled
+            "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
+            "@typescript-eslint/no-non-null-assertion": "error",
             "@typescript-eslint/consistent-type-definitions": "error",
-            "@typescript-eslint/no-unnecessary-condition": ["error", { // needs strict-null-checks
+            "@typescript-eslint/no-unnecessary-condition": ["error", {
                 allowConstantLoopConditions: true,
             }],
             "@typescript-eslint/no-confusing-void-expression": ["error", {
@@ -72,9 +72,10 @@ export default tseslint.config(
             "@typescript-eslint/no-invalid-void-type": ["warn", {
                 allowAsThisParameter: true,
             }],
-            "@typescript-eslint/prefer-nullish-coalescing": ["off", { // was "warn" but needs strict-null-checks
+            "@typescript-eslint/prefer-nullish-coalescing": ["warn", {
                 ignoreIfStatements: true,
                 ignoreTernaryTests: true,
+                ignorePrimitives: { boolean: true },
             }],
             "@typescript-eslint/prefer-optional-chain": "off",
             "@typescript-eslint/no-empty-object-type": ["warn", {
@@ -177,9 +178,6 @@ export default tseslint.config(
             "@typescript-eslint/return-await": "error",
 
             "import-x/no-cycle": ["error"],
-
-            "@angular-eslint/prefer-standalone": "off", // remove when converted to standalone components
-            "@angular-eslint/component-class-suffix": "off", // fix after upgrade to Angular 20
         },
     },
     {

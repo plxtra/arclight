@@ -2,7 +2,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ActionSheetOptions, PickerController } from '@ionic/angular/standalone';
+import { ActionSheetOptions, IonPicker } from '@ionic/angular/standalone';
 import { MultiEvent } from '@pbkware/js-utils';
 import { ZenithEnvironmentedValueParts } from '@plxtra/motif-core';
 import { Decimal } from "decimal.js-light";
@@ -62,8 +62,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   private readonly _toastService: ToastService;
   private readonly _unifySvc: UnifyService;
   private readonly _localeSvc: LocaleService;
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  private readonly _pickerController: PickerController;
+  private readonly _pickerController: IonPicker;
 
   private _subidWriteSuccess: MultiEvent.SubscriptionId;
   private _subidWriteFail: MultiEvent.SubscriptionId;
@@ -81,7 +80,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     const toastService = inject(ToastService);
     const unifySvc = inject(UnifyService);
     const localeSvc = inject(LocaleService);
-    const pickerController = inject(PickerController);
+    const pickerController = inject(IonPicker);
 
     this._personalisationSvc = personalisationSvc;
     this._themeSvc = themeSvc;

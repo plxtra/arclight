@@ -1,4 +1,4 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, InjectionToken, inject } from "@angular/core";
 import { IDeviceInfo } from "../shared/models/site/device-information.model";
 
 @Injectable({
@@ -10,7 +10,7 @@ export class DeviceInformationService {
   private _deviceInfo: IDeviceInfo = {} as IDeviceInfo;
 
   constructor() {
-    const baseUrl = inject<string>('BASE_URL' as any);
+    const baseUrl = inject<string>(DeviceInformationService.BASE_URL);
 
     this._baseUrl = baseUrl;
   }
@@ -37,4 +37,8 @@ export class DeviceInformationService {
     this._deviceInfo = await response.json() as IDeviceInfo;
     window.arclightLogger.logInfo(`Device detected ${ this._deviceInfo.deviceName}`);
   }
+}
+
+export namespace DeviceInformationService {
+  export const BASE_URL = new InjectionToken<string>('BASE_URL')
 }
