@@ -1,6 +1,6 @@
 {
   "name": "arclight",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "scripts": {
     "ng": "ng",
     "copy:config:xosp-dev:config": "npx cpy-cli dev-config/xosp/config.xosp-dev.json dev-static/config/ --flat --rename=config.json",
