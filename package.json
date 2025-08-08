@@ -34,7 +34,7 @@
     "@angular/platform-server": "^20.1.2",
     "@angular/router": "^20.1.2",
     "@angular/service-worker": "^20.1.2",
-    "@ionic/angular": "^8.4.3",
+    "@ionic/angular": "^8.7.2",
     "@ionic/storage-angular": "^4.0.0",
     "@pbkware/js-utils": "^0.8.3",
     "@plxtra/motif-core": "^0.9.6",
