@@ -2,7 +2,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ActionSheetOptions, IonPicker } from '@ionic/angular/standalone';
+import { ActionSheetOptions } from '@ionic/angular/standalone';
 import { MultiEvent } from '@pbkware/js-utils';
 import { ZenithEnvironmentedValueParts } from '@plxtra/motif-core';
 import { Decimal } from "decimal.js-light";
@@ -62,7 +62,6 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   private readonly _toastService: ToastService;
   private readonly _unifySvc: UnifyService;
   private readonly _localeSvc: LocaleService;
-  private readonly _pickerController: IonPicker;
 
   private _subidWriteSuccess: MultiEvent.SubscriptionId;
   private _subidWriteFail: MultiEvent.SubscriptionId;
@@ -80,14 +79,12 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     const toastService = inject(ToastService);
     const unifySvc = inject(UnifyService);
     const localeSvc = inject(LocaleService);
-    const pickerController = inject(IonPicker);
 
     this._personalisationSvc = personalisationSvc;
     this._themeSvc = themeSvc;
     this._toastService = toastService;
     this._unifySvc = unifySvc;
     this._localeSvc = localeSvc;
-    this._pickerController = pickerController;
 
     this._debounceFlashTimer = new Subject<number>();
     this._debounceFlashTimer.pipe(debounceTime(this.msDelayFlashTimerChange)).subscribe({
