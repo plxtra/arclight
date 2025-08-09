@@ -13,19 +13,35 @@ import {
   OhlcHistorySequenceSeriesInterface,
   OhlcIntervalHistorySequenceSeries,
 } from '@plxtra/motif-core';
-import * as Highcharts from 'highcharts';
-import * as More from 'highcharts/highcharts-more';
-import * as Indicators from 'highcharts/indicators/indicators-all';
-import * as RSI from 'highcharts/indicators/rsi';
-import * as Accessibility from 'highcharts/modules/accessibility';
-import * as AdvAnnotations from 'highcharts/modules/annotations-advanced';
-import * as Boost from 'highcharts/modules/boost';
-import * as DragPanes from 'highcharts/modules/drag-panes';
-import * as NoData from 'highcharts/modules/no-data-to-display';
-import * as PriceIndicator from 'highcharts/modules/price-indicator';
-import * as StockCharts from 'highcharts/modules/stock';
-import * as StockTools from 'highcharts/modules/stock-tools';
-import * as ExampleDarkTheme from 'highcharts/themes/dark-unica';
+
+import 'highcharts/esm/highcharts-more.js';
+import Highcharts from 'highcharts/esm/highstock.js';
+import 'highcharts/esm/indicators/indicators-all.js';
+import 'highcharts/esm/modules/accessibility.js';
+import 'highcharts/esm/modules/annotations-advanced.js';
+import 'highcharts/esm/modules/boost.js';
+import 'highcharts/esm/modules/drag-panes.js';
+import 'highcharts/esm/modules/no-data-to-display.js';
+import 'highcharts/esm/modules/price-indicator.js';
+import 'highcharts/esm/modules/stock-tools.js';
+import 'highcharts/esm/themes/adaptive.js';
+// import * as ExampleDarkTheme from 'highcharts/themes/dark-unica.js';
+// import 'highcharts/css/themes/dark-unica.css';
+
+
+// import * as Highcharts from 'highcharts';
+// import * as More from 'highcharts/highcharts-more';
+// import * as Indicators from 'highcharts/indicators/indicators-all';
+// import * as RSI from 'highcharts/indicators/rsi';
+// import * as Accessibility from 'highcharts/modules/accessibility';
+// import * as AdvAnnotations from 'highcharts/modules/annotations-advanced';
+// import * as Boost from 'highcharts/modules/boost';
+// import * as DragPanes from 'highcharts/modules/drag-panes';
+// import * as NoData from 'highcharts/modules/no-data-to-display';
+// import * as PriceIndicator from 'highcharts/modules/price-indicator';
+// import * as StockCharts from 'highcharts/modules/stock';
+// import * as StockTools from 'highcharts/modules/stock-tools';
+// import * as ExampleDarkTheme from 'highcharts/themes/dark-unica';
 import { addIcons } from 'ionicons';
 import { constructSharp } from 'ionicons/icons';
 import { Subject } from 'rxjs';
@@ -51,6 +67,7 @@ export class StockChartPageComponent extends StockDetailBaseDirective implements
 
   @ViewChild('chartPlaceholder', { static: true }) chartPlaceholder: { nativeElement: HTMLDivElement };
 
+  private readonly _themeSvc = inject(ThemeService);
 
   private _historySource: DataIvemIdPriceVolumeSequenceHistory | undefined;
   private _sequencer: IntervalHistorySequencer;
@@ -70,36 +87,25 @@ export class StockChartPageComponent extends StockDetailBaseDirective implements
   private readonly _redrawThrottlePeriodMs: number = 500;
 
   constructor() {
-    const themeSvc = inject(ThemeService);
-
     super();
 
-    StockCharts.default(Highcharts);
+    // StockCharts.default(Highcharts);
 
-    Boost.default(Highcharts);
-    More.default(Highcharts);
-    NoData.default(Highcharts);
+    // Boost.default(Highcharts);
+    // More.default(Highcharts);
+    // NoData.default(Highcharts);
 
-    Indicators.default(Highcharts);
-    RSI.default(Highcharts);
+    // Indicators.default(Highcharts);
+    // RSI.default(Highcharts);
 
-    DragPanes.default(Highcharts);
-    AdvAnnotations.default(Highcharts);
-    PriceIndicator.default(Highcharts);
-    StockTools.default(Highcharts);
+    // DragPanes.default(Highcharts);
+    // AdvAnnotations.default(Highcharts);
+    // PriceIndicator.default(Highcharts);
+    // StockTools.default(Highcharts);
 
-    Accessibility.default(Highcharts);
+    // Accessibility.default(Highcharts);
 
     this._displayTZ = this._bundledSvc.personalisationService.displayTimeZoneToModeId();
-
-    Highcharts.setOptions(Highcharts.defaultOptions);
-    if (themeSvc.queryDarkTheme())
-      ExampleDarkTheme.default(Highcharts);
-
-    // if (themseSvc.queryDarkTheme())
-    //   Highcharts.setOptions(CustomHighchartThemes.darkTheme);
-    // else
-    //   Highcharts.setOptions(CustomHighchartThemes.lightTheme);
 
     this._redrawThrottleOHLC = new Subject<SeriesChangeEvent>();
     this._redrawThrottleOHLC.pipe(bufferTime(this._redrawThrottlePeriodMs)).subscribe({
@@ -465,7 +471,17 @@ export class StockChartPageComponent extends StockDetailBaseDirective implements
       }
     };
 
-    this._chart = new Highcharts.StockChart(this.chartPlaceholder.nativeElement, options);
+    switch (this._themeSvc.theme) {
+      case "light":
+        this.chartPlaceholder.nativeElement.classList.add('highcharts-light');
+        break;
+      case "dark":
+        this.chartPlaceholder.nativeElement.classList.add('highcharts-dark');
+        break;
+    }
+
+    // eslint-disable-next-line import-x/namespace
+    this._chart = Highcharts.stockChart(this.chartPlaceholder.nativeElement, options);
 
     // if (this._ohlc.pointCount > 30) {
     //   const endTime = this.calcPlotDate(this._ohlc.getSequencerPoint(this._ohlc.pointCount - 1), this.displayTZ);
