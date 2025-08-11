@@ -1,8 +1,38 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ActionSheetButton, ActionSheetController, ModalController } from '@ionic/angular/standalone';
+import {
+  ActionSheetButton,
+  ActionSheetController,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCheckbox,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonRow,
+  IonSegment,
+  IonSegmentButton,
+  IonSelect,
+  IonSelectOption,
+  IonSpinner,
+  IonText,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
 import { DataIvemId, QueryNotificationChannelsDataDefinition, QueryNotificationChannelsDataItem, ScanField, ScanFieldCondition, ScanFormula } from '@plxtra/motif-core';
 import { addIcons } from 'ionicons';
@@ -32,10 +62,36 @@ import { SymbolSearchPageComponent } from '../symbol-search/symbol-search.page';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     TraitConditionComponent,
     SelectLocaleComponent,
     ScanSummaryComponent,
+    IonContent,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonSpinner,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonHeader,
+    IonTitle,
+    IonFooter,
+    IonImg,
+    IonInput,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+    IonCardSubtitle,
+    IonText,
+    IonListHeader,
+    IonSegment,
+    IonSegmentButton,
+    IonCheckbox,
+    IonSelect,
+    IonSelectOption,
   ],
 })
 export class AlterScanPageComponent extends MultiSheetTemplateDirective implements OnInit, OnDestroy {

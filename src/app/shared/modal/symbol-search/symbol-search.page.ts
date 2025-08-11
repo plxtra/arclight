@@ -1,9 +1,30 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { IonInput, ModalController, SegmentCustomEvent, ViewDidEnter } from '@ionic/angular/standalone';
+import {
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonSegment,
+  IonSegmentButton,
+  IonSkeletonText,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+  SegmentCustomEvent,
+  ViewDidEnter,
+} from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { SearchSymbolsDataDefinition, SymbolFieldId, SymbolsDataItem } from '@plxtra/motif-core';
 import { addIcons } from 'ionicons';
@@ -21,7 +42,24 @@ import { zstring, zSymbolsDataItem } from '../../types/nullable-types';
   imports: [
     FormsModule,
     ScrollingModule,
-    IonicModule
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonList,
+    IonItem,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel,
+    IonContent,
+    IonImg,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonSkeletonText,
+    IonInput,
   ],
 })
 export class SymbolSearchPageComponent implements OnInit, OnDestroy, ViewDidEnter {

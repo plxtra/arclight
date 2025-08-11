@@ -2,7 +2,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonBadge, IonCard, IonCardHeader, IonCol, IonGrid, IonLabel, IonRow, IonSkeletonText } from '@ionic/angular/standalone';
 import { MultiEvent } from '@pbkware/js-utils';
 import { DataIvemId, SecurityDataDefinition, SecurityDataItem } from '@plxtra/motif-core';
 import { BundledService } from 'src/app/services/bundled.service';
@@ -18,7 +18,14 @@ import { RecentMovement } from '../../shared/types/shared-types';
     CommonModule,
     FormsModule,
     ScrollingModule,
-    IonicModule,
+    IonCard,
+    IonCardHeader,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonLabel,
+    IonSkeletonText,
+    IonBadge,
   ],
 })
 export class StandardSecurityControlComponent implements OnDestroy {

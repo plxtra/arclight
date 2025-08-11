@@ -2,7 +2,21 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonLabel,
+  IonModal,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { trash } from 'ionicons/icons';
 
@@ -13,7 +27,19 @@ import { trash } from 'ionicons/icons';
   imports: [
     FormsModule,
     ScrollingModule,
-    IonicModule
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonLabel,
+    IonFooter,
+    IonButtons,
+    IonButton,
+    IonIcon,
   ],
 })
 export class ConfirmDeleteComponent {

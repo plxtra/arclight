@@ -1,7 +1,7 @@
 
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonButton, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
 import { addIcons } from 'ionicons';
 import { refreshCircle } from 'ionicons/icons';
@@ -13,7 +13,9 @@ import { OpenIdService } from '../../services/open-id-service';
   styleUrls: ['./signout.page.scss'],
   imports: [
     FormsModule,
-    IonicModule
+    IonButton,
+    IonIcon,
+    IonSpinner,
   ],
 })
 export class SignoutPageComponent implements OnInit {

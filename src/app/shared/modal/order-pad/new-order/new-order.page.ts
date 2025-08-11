@@ -1,8 +1,35 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular/standalone';
+import {
+  IonBadge,
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonDatetime,
+  IonFab,
+  IonFabButton,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonModal,
+  IonRow,
+  IonSegment,
+  IonSegmentButton,
+  IonSelect,
+  IonSelectOption,
+  IonSkeletonText,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import {
   Badness,
@@ -47,6 +74,7 @@ import { DecimalCreate } from 'src/app/shared/types/decimal-create';
 import { DecimalFormat } from 'src/app/shared/types/decimal-format';
 import { zOrderRequestDataItem, zSecurityDataItem, zstring } from 'src/app/shared/types/nullable-types';
 import { StandardSecurityControlComponent } from '../../../../components/standard-security-control/standard-security-control.component';
+import { ToastService } from '../../../../services/toast.service';
 import { AccountSearchPageComponent } from '../../account-search/account-search.page';
 import { SymbolSearchPageComponent } from '../../symbol-search/symbol-search.page';
 
@@ -57,8 +85,33 @@ import { SymbolSearchPageComponent } from '../../symbol-search/symbol-search.pag
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     StandardSecurityControlComponent,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonTitle,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonFooter,
+    IonBadge,
+    IonFab,
+    IonFabButton,
+    IonIcon,
+    IonItemDivider,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonSegment,
+    IonSegmentButton,
+    IonSkeletonText,
+    IonSelect,
+    IonSelectOption,
+    IonModal,
+    IonInput,
+    IonDatetime,
   ],
 })
 export class NewOrderPageComponent implements OnInit, OnDestroy {
@@ -75,6 +128,7 @@ export class NewOrderPageComponent implements OnInit, OnDestroy {
   private readonly _unifySvc: UnifyService;
   private readonly _bundledSvc: BundledService;
   private readonly _modalController: ModalController;
+  private readonly _toastService: ToastService;
 
   private _securityDI: zSecurityDataItem;
   private _subidSecurityEndChanges: MultiEvent.SubscriptionId;
@@ -124,10 +178,13 @@ export class NewOrderPageComponent implements OnInit, OnDestroy {
     const unifySvc = inject(UnifyService);
     const bundledSvc = inject(BundledService);
     const modalController = inject(ModalController);
+    const toastService = inject(ToastService);
 
     this._unifySvc = unifySvc;
     this._bundledSvc = bundledSvc;
     this._modalController = modalController;
+    this._toastService = toastService;
+
     this.subscribeToTradingAccounts();
     this.highlightingErrorText = false;
     this._viewDataSecurity = new SecurityViewModel(this._bundledSvc, undefined);
@@ -307,7 +364,10 @@ export class NewOrderPageComponent implements OnInit, OnDestroy {
   public get linkLimitValue(): zstring {
     return this._linkLimitValue;
   }
-  public set linkLimitValue(v: zstring) {
+  public set linkLimitValue(v: zstring | null) {
+    if (v === null) {
+      v = undefined;
+    }
     if (this._linkLimitValue !== v) {
       this._linkLimitValue = v;
       this._orderPad.limitValue = DecimalCreate.newZDecimal(this._linkLimitValue);
@@ -629,12 +689,17 @@ export class NewOrderPageComponent implements OnInit, OnDestroy {
       n.name = TimeInForce.idToName(id);
       n.display = TimeInForce.idToDisplay(id);
       return n;
-    })
+    });
   }
 
   private changeIvemId(ivemId: IvemId) {
     this._linkRoute = undefined;
-    this._orderPad.tradingIvemId = this._unifySvc.symbolsService.tryGetDefaultTradingIvemIdFromIvemId(ivemId);
+    const tradingIvemId = this._unifySvc.symbolsService.tryGetDefaultTradingIvemIdFromIvemId(ivemId);
+    if (tradingIvemId === undefined) {
+      this._toastService.showToast(`Instrument can not be traded: ${this._unifySvc.symbolsService.ivemIdToDisplay(ivemId)}`, 1500, 'alert-circle', 'secondary');
+    } else {
+      this._orderPad.tradingIvemId = tradingIvemId;
+    }
   }
 
   private updateSummary() {

@@ -6,8 +6,30 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { ActionSheetOptions, IonRouterLink } from '@ionic/angular/standalone';
+import {
+  ActionSheetOptions,
+  IonBadge,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonItem,
+  IonItemDivider,
+  IonItemGroup,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonRouterLink,
+  IonRow,
+  IonSearchbar,
+  IonSelect,
+  IonSelectOption,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { BundledService } from 'src/app/services/bundled.service';
 import { OrderGrouping } from 'src/app/services/personalisation.service';
 import { UnifyService } from 'src/app/services/unify.service';
@@ -24,9 +46,28 @@ import { OpenOrdersControlComponent } from '../../components/open-orders-control
     FormsModule,
     RouterLink,
     IonRouterLink,
-    IonicModule,
     ScrollingModule,
-    OpenOrdersControlComponent
+    OpenOrdersControlComponent,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
+    IonMenuButton,
+    IonSpinner,
+    IonList,
+    IonItemGroup,
+    IonItemDivider,
+    IonLabel,
+    IonBadge,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonFooter,
+    IonItem,
+    IonSelect,
+    IonSelectOption,
+    IonSearchbar,
   ],
 })
 export class OrdersPageComponent implements OnInit, OnDestroy {

@@ -1,7 +1,24 @@
 
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonAccordion,
+  IonAccordionGroup,
+  IonButtons,
+  IonChip,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { MultiEvent, UsableListChangeTypeId } from '@pbkware/js-utils';
 import { DataMarket, MarketsService } from '@plxtra/motif-core';
 import { BundledService } from 'src/app/services/bundled.service';
@@ -16,8 +33,23 @@ import { OpenOrdersControlComponent } from '../../components/open-orders-control
   styleUrls: ['./status.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
-    OpenOrdersControlComponent
+    OpenOrdersControlComponent,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
+    IonMenuButton,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonItemDivider,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonAccordion,
+    IonAccordionGroup,
+    IonChip,
   ],
 })
 export class StatusPageComponent implements OnInit, OnDestroy {

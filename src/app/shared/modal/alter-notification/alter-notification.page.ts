@@ -1,10 +1,43 @@
 
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ActionSheetController, ModalController } from '@ionic/angular/standalone';
+import {
+  ActionSheetController,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCheckbox,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonInput,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
-import { CreateNotificationChannelDataDefinition, CreateNotificationChannelDataItem, NotificationDistributionMethodId, QueryNotificationChannelDataDefinition, QueryNotificationChannelDataItem, QueryNotificationDistributionMethodsDataDefinition, QueryNotificationDistributionMethodsDataItem, ZenithProtocolCommon } from '@plxtra/motif-core';
+import {
+  CreateNotificationChannelDataDefinition,
+  CreateNotificationChannelDataItem,
+  NotificationDistributionMethodId,
+  QueryNotificationChannelDataDefinition,
+  QueryNotificationChannelDataItem,
+  QueryNotificationDistributionMethodsDataDefinition,
+  QueryNotificationDistributionMethodsDataItem,
+  ZenithProtocolCommon,
+} from '@plxtra/motif-core';
 import { addIcons } from 'ionicons';
 import { alertCircleOutline, chevronBack, chevronForward, close, ellipse, search, trash, trashOutline, warningOutline } from 'ionicons/icons';
 import { BundledService } from 'src/app/services/bundled.service';
@@ -27,7 +60,28 @@ import { Alteration, FieldDefinition } from '../../types/field-management.types'
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    IonicModule
+    IonContent,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonSpinner,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonHeader,
+    IonTitle,
+    IonFooter,
+    IonImg,
+    IonItemDivider,
+    IonInput,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+    IonCardSubtitle,
+    IonCheckbox,
   ],
 })
 export class AlterNotificationPageComponent extends FormTemplateDirective implements OnInit, OnDestroy {

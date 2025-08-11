@@ -2,8 +2,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonMenuButton, IonRow, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
 import { SingleOrderCollector } from 'src/app/shared/collectors/single-order-collector';
 import { AmendOrderPageComponent } from 'src/app/shared/modal/order-pad/amend-order/amend-order.page';
@@ -20,9 +19,22 @@ import { StandardSecurityControlComponent } from '../../../components/standard-s
   styleUrls: ['./order-detail.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
     OpenOrdersControlComponent,
-    StandardSecurityControlComponent
+    StandardSecurityControlComponent,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
+    IonMenuButton,
+    IonList,
+    IonLabel,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonItem,
+    IonBackButton,
+    IonButton,
   ],
 })
 export class OrderDetailPageComponent implements OnInit {

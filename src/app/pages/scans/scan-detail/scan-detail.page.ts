@@ -3,8 +3,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import {
   AssertInternalError,
   Integer,
@@ -42,11 +41,24 @@ import { ScanSummaryComponent } from '../../../components/scan-summary/scan-summ
   styleUrls: ['./scan-detail.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
     ScrollingModule,
     ScanSummaryComponent,
     ConfirmDeleteComponent,
-    OpenOrdersControlComponent
+    OpenOrdersControlComponent,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
+    IonMenuButton,
+    IonList,
+    IonLabel,
+    IonSpinner,
+    IonListHeader,
+    IonImg,
+    IonItem,
+    IonBackButton,
+    IonButton,
   ],
 })
 export class ScanDetailPageComponent implements OnInit, OnDestroy {

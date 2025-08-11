@@ -2,7 +2,7 @@ import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrollin
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonCol, IonContent, IonDatetime, IonGrid, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonModal, IonRow, IonSpinner } from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { DayTradesDataDefinition, DayTradesDataItem, DayTradesGridRecordStore } from '@plxtra/motif-core';
 import { parseISO } from 'date-fns';
@@ -20,8 +20,19 @@ import { StockDetailBaseDirective } from '../stock-detail.base';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     ScrollingModule,
+    IonContent,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonItemDivider,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonModal,
+    IonSpinner,
+    IonDatetime,
   ],
 })
 export class StockTradesPageComponent extends StockDetailBaseDirective implements OnInit, OnDestroy {

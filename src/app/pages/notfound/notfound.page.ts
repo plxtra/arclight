@@ -2,8 +2,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { IonRouterLink } from '@ionic/angular/standalone';
+import { IonButton, IonCol, IonContent, IonGrid, IonImg, IonRouterLink, IonRow, IonText } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-notfound',
@@ -13,7 +12,13 @@ import { IonRouterLink } from '@ionic/angular/standalone';
     FormsModule,
     RouterLink,
     IonRouterLink,
-    IonicModule
+    IonContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonImg,
+    IonText,
+    IonButton,
   ],
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class

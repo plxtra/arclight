@@ -2,8 +2,27 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular/standalone';
+import {
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonSearchbar,
+  IonSkeletonText,
+  IonSpinner,
+  IonText,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { BrokerageAccountsDataDefinition, BrokerageAccountsDataItem } from '@plxtra/motif-core';
 import { addIcons } from 'ionicons';
@@ -20,7 +39,24 @@ import { AccountViewModel } from '../../models/view/account.viewmodel';
   imports: [
     FormsModule,
     ScrollingModule,
-    IonicModule
+    IonContent,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonSpinner,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonHeader,
+    IonTitle,
+    IonText,
+    IonSkeletonText,
+    IonFooter,
+    IonSearchbar,
   ],
 })
 export class AccountSearchPageComponent implements OnInit, OnDestroy {

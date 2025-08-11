@@ -2,8 +2,22 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular/standalone';
+import {
+  IonAccordion,
+  IonAccordionGroup,
+  IonBadge,
+  IonButton,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonSkeletonText,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
 import { NewOrderPageComponent } from 'src/app/shared/modal/order-pad/new-order/new-order.page';
 import { NewOrderPlacementTransferModel } from 'src/app/shared/models/transfer/new-order-placement.transfermodel';
@@ -17,8 +31,20 @@ import { StockDetailBaseDirective } from '../stock-detail.base';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     ScrollingModule,
+    IonContent,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonBadge,
+    IonItemDivider,
+    IonButton,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonSkeletonText,
+    IonAccordion,
+    IonAccordionGroup,
   ],
 })
 export class StockGeneralPageComponent extends StockDetailBaseDirective implements OnInit, OnDestroy {

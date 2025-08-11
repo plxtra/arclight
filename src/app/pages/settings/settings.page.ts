@@ -1,8 +1,24 @@
 
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ActionSheetOptions } from '@ionic/angular/standalone';
+import {
+  ActionSheetOptions,
+  IonButtons,
+  IonCheckbox,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonRange,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { MultiEvent } from '@pbkware/js-utils';
 import { ZenithEnvironmentedValueParts } from '@plxtra/motif-core';
 import { Decimal } from "decimal.js-light";
@@ -24,8 +40,22 @@ import { ToastService } from '../../services/toast.service';
   styleUrls: ['./settings.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
-    OpenOrdersControlComponent
+    OpenOrdersControlComponent,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
+    IonMenuButton,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonItemDivider,
+    IonSelect,
+    IonSelectOption,
+    IonIcon,
+    IonCheckbox,
+    IonRange
   ],
 })
 export class SettingsPageComponent implements OnInit, OnDestroy {

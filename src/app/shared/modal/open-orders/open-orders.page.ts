@@ -2,8 +2,26 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { AccordionGroupCustomEvent, ModalController } from '@ionic/angular/standalone';
+import {
+  AccordionGroupCustomEvent,
+  IonAccordion,
+  IonAccordionGroup,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
 import { addIcons } from 'ionicons';
 import { close } from 'ionicons/icons';
@@ -21,8 +39,23 @@ import { CancelOrderPageComponent } from '../order-pad/cancel-order/cancel-order
   styleUrls: ['./open-orders.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
-    ScrollingModule
+    ScrollingModule,
+    IonContent,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonHeader,
+    IonTitle,
+    IonCard,
+    IonAccordion,
+    IonAccordionGroup,
+    IonGrid,
   ],
 })
 export class OpenOrdersPageComponent {

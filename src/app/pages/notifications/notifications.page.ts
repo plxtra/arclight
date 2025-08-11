@@ -2,8 +2,35 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { AlertController, IonRouterLink, ModalController } from '@ionic/angular/standalone';
+import {
+  AlertController,
+  IonBadge,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCol,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonFooter,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonRouterLink,
+  IonRow,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { QueryNotificationChannelsDataDefinition, QueryNotificationChannelsDataItem } from '@plxtra/motif-core';
 import { addIcons } from 'ionicons';
@@ -27,10 +54,33 @@ import { OpenOrdersControlComponent } from '../../components/open-orders-control
   styleUrls: ['./notifications.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
     RouterLink,
     IonRouterLink,
-    OpenOrdersControlComponent
+    OpenOrdersControlComponent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonContent,
+    IonList,
+    IonMenuButton,
+    IonTitle,
+    IonButton,
+    IonIcon,
+    IonFab,
+    IonFabButton,
+    IonCard,
+    IonCardHeader,
+    IonCardSubtitle,
+    IonCardContent,
+    IonRow,
+    IonCol,
+    IonBadge,
+    IonLabel,
+    IonItem,
+    IonItemDivider,
+    IonFooter,
+    IonSearchbar,
+    IonImg,
   ],
 })
 export class NotificationsPageComponent extends ListDataTemplateDirective<NotificationViewModel> implements OnInit {

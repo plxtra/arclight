@@ -2,7 +2,20 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonSegment,
+  IonSegmentButton,
+  IonSkeletonText,
+  IonSpinner,
+} from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { DepthDataDefinition, DepthDataItem, DepthStyleId, FullDepthSideGridRecordStore, OrderSideId, SecurityDataItem } from '@plxtra/motif-core';
 import { UserSessionService } from 'src/app/services/user-session.service';
@@ -19,8 +32,19 @@ import { StockDetailBaseDirective } from '../stock-detail.base';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     ScrollingModule,
+    IonContent,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonSpinner,
+    IonItemDivider,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonSkeletonText,
+    IonSegment,
+    IonSegmentButton,
   ],
 })
 export class StockDepthPageComponent extends StockDetailBaseDirective implements OnInit, OnDestroy {

@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonRow, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { AssertInternalError, delay1Tick, MultiEvent } from '@pbkware/js-utils';
 import {
   Badness,
@@ -38,8 +37,22 @@ import { StandardSecurityControlComponent } from '../../../../components/standar
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     StandardSecurityControlComponent,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonTitle,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonFooter,
+    IonSpinner,
+    IonIcon,
+    IonGrid,
+    IonRow,
+    IonCol,
   ],
 })
 export class CancelOrderPageComponent implements OnInit, OnDestroy {

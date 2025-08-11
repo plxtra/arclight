@@ -1,8 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ModalController } from '@ionic/angular/standalone';
+import {
+  IonBadge,
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent, delay1Tick } from '@pbkware/js-utils';
 import {
   Badness,
@@ -43,8 +64,27 @@ import { StandardSecurityControlComponent } from '../../../../components/standar
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     StandardSecurityControlComponent,
+    IonContent,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonSpinner,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonHeader,
+    IonTitle,
+    IonFooter,
+    IonInput,
+    IonGrid,
+    IonItemDivider,
+    IonBadge,
+    IonFab,
+    IonFabButton,
   ],
 })
 export class AmendOrderPageComponent implements OnInit, OnDestroy {
@@ -223,7 +263,10 @@ export class AmendOrderPageComponent implements OnInit, OnDestroy {
   public get linkLimitValue(): string | undefined{
     return this._linkLimitValue;
   }
-  public set linkLimitValue(v: string | undefined) {
+  public set linkLimitValue(v: string | null | undefined) {
+    if (v === null) {
+      v = undefined;
+    }
     if (this._linkLimitValue !== v) {
       this._linkLimitValue = v;
       if (this._orderPad === undefined) {

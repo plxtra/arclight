@@ -1,8 +1,25 @@
 
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ToastController } from '@ionic/angular/standalone';
+import {
+  IonAccordion,
+  IonAccordionGroup,
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  ToastController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
 import { MarketsService } from '@plxtra/motif-core';
 import { addIcons } from 'ionicons';
@@ -21,7 +38,22 @@ import { UserSessionService } from '../../services/user-session.service';
   styleUrls: ['./about.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
+    IonHeader,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonMenuButton,
+    IonIcon,
+    IonTitle,
+    IonContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonItem,
+    IonLabel,
+    IonAccordion,
+    IonAccordionGroup,
+    IonList,
     OpenOrdersControlComponent
   ],
 })

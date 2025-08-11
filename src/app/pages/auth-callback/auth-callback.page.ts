@@ -1,8 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ViewDidEnter } from '@ionic/angular/standalone';
+import { IonButton, IonIcon, IonSpinner, ViewDidEnter } from '@ionic/angular/standalone';
 import { getErrorMessage } from '@pbkware/js-utils';
 import { addIcons } from 'ionicons';
 import { refreshCircle } from 'ionicons/icons';
@@ -15,7 +14,9 @@ import { ToastService } from '../../services/toast.service';
   styleUrls: ['./auth-callback.page.scss'],
   imports: [
     FormsModule,
-    IonicModule
+    IonButton,
+    IonIcon,
+    IonSpinner
   ],
 })
 export class AuthCallbackPageComponent implements ViewDidEnter {

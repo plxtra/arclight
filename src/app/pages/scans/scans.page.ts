@@ -2,8 +2,29 @@
 import { ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { AlertController, IonRouterLink, ModalController } from '@ionic/angular/standalone';
+import {
+  AlertController,
+  IonBadge,
+  IonButtons,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonFooter,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonRouterLink,
+  IonSearchbar,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { AssertInternalError, Integer, MultiEvent, UsableListChangeTypeId } from '@pbkware/js-utils';
 import { Feed, FeedStatusId, ScansService } from '@plxtra/motif-core';
 import { addIcons } from 'ionicons';
@@ -28,8 +49,25 @@ import { FeedsService } from '../../services/feeds.service';
     FormsModule,
     RouterLink,
     IonRouterLink,
-    IonicModule,
-    OpenOrdersControlComponent
+    OpenOrdersControlComponent,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
+    IonMenuButton,
+    IonList,
+    IonLabel,
+    IonItem,
+    IonFooter,
+    IonBadge,
+    IonSearchbar,
+    IonSpinner,
+    IonFab,
+    IonFabButton,
+    IonIcon,
+    IonItemDivider,
+    IonImg,
   ],
 })
 export class ScansPageComponent extends ListDataTemplateDirective<ScanViewModel> implements OnDestroy {

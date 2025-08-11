@@ -2,7 +2,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { SourceTzOffsetDateTime } from '@pbkware/js-utils';
 import {
   AccumulationIntervalHistorySequenceSeries,
@@ -14,6 +13,7 @@ import {
   OhlcIntervalHistorySequenceSeries,
 } from '@plxtra/motif-core';
 
+import { IonContent, IonSpinner } from '@ionic/angular/standalone';
 import 'highcharts/esm/highcharts-more.js';
 import Highcharts from 'highcharts/esm/highstock.js';
 import 'highcharts/esm/indicators/indicators-all.js';
@@ -25,23 +25,6 @@ import 'highcharts/esm/modules/no-data-to-display.js';
 import 'highcharts/esm/modules/price-indicator.js';
 import 'highcharts/esm/modules/stock-tools.js';
 import 'highcharts/esm/themes/adaptive.js';
-// import * as ExampleDarkTheme from 'highcharts/themes/dark-unica.js';
-// import 'highcharts/css/themes/dark-unica.css';
-
-
-// import * as Highcharts from 'highcharts';
-// import * as More from 'highcharts/highcharts-more';
-// import * as Indicators from 'highcharts/indicators/indicators-all';
-// import * as RSI from 'highcharts/indicators/rsi';
-// import * as Accessibility from 'highcharts/modules/accessibility';
-// import * as AdvAnnotations from 'highcharts/modules/annotations-advanced';
-// import * as Boost from 'highcharts/modules/boost';
-// import * as DragPanes from 'highcharts/modules/drag-panes';
-// import * as NoData from 'highcharts/modules/no-data-to-display';
-// import * as PriceIndicator from 'highcharts/modules/price-indicator';
-// import * as StockCharts from 'highcharts/modules/stock';
-// import * as StockTools from 'highcharts/modules/stock-tools';
-// import * as ExampleDarkTheme from 'highcharts/themes/dark-unica';
 import { addIcons } from 'ionicons';
 import { constructSharp } from 'ionicons/icons';
 import { Subject } from 'rxjs';
@@ -57,8 +40,9 @@ import { StockDetailBaseDirective } from '../stock-detail.base';
   styleUrls: ['./stock-chart.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
-    ScrollingModule
+    ScrollingModule,
+    IonContent,
+    IonSpinner,
   ],
 })
 export class StockChartPageComponent extends StockDetailBaseDirective implements OnInit, OnDestroy, AfterViewInit {

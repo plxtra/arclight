@@ -2,8 +2,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { IonRouterLink, ModalController } from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonRouterLink, IonRow, IonSkeletonText, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import {
   BrokerageAccountBalancesDataDefinition,
@@ -34,10 +33,25 @@ import { OpenOrdersControlComponent } from '../../../components/open-orders-cont
   styleUrls: ['./account-detail.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
     RouterLink,
     IonRouterLink,
-    OpenOrdersControlComponent
+    OpenOrdersControlComponent,
+    IonHeader,
+    IonButtons,
+    IonContent,
+    IonToolbar,
+    IonMenuButton,
+    IonTitle,
+    IonBackButton,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonItem,
+    IonLabel,
+    IonSkeletonText,
+    IonList,
+    IonItemDivider,
+    IonButton,
   ],
 })
 export class AccountDetailPageComponent implements OnInit, OnDestroy {

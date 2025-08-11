@@ -2,8 +2,22 @@ import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrollin
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { IonSearchbar } from '@ionic/angular/standalone';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonModal,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
 import { addIcons } from 'ionicons';
 import { close } from 'ionicons/icons';
@@ -18,7 +32,20 @@ import { CultureViewModel } from 'src/app/shared/models/view/culture.viewmodel';
     CommonModule,
     FormsModule,
     ScrollingModule,
-    IonicModule,
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonIcon,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonImg,
+    IonLabel,
+    IonFooter,
+    IonSearchbar,
   ],
 })
 export class SelectLocaleComponent implements OnInit {

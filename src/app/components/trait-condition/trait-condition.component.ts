@@ -2,7 +2,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonButton, IonCol, IonIcon, IonInput, IonItem, IonRow, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close } from 'ionicons/icons';
 import { TraitStyle } from 'src/app/shared/models/scans/trait-style.type';
@@ -15,7 +15,14 @@ import { SelectOptionModel } from 'src/app/shared/models/site/select-option.mode
   imports: [
     FormsModule,
     ScrollingModule,
-    IonicModule
+    IonRow,
+    IonCol,
+    IonItem,
+    IonSelect,
+    IonSelectOption,
+    IonButton,
+    IonIcon,
+    IonInput,
   ],
 })
 export class TraitConditionComponent implements OnInit {

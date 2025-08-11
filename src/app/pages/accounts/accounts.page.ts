@@ -2,7 +2,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { BrokerageAccountsDataDefinition, BrokerageAccountsDataItem } from '@plxtra/motif-core';
 import { BundledService } from 'src/app/services/bundled.service';
@@ -11,7 +10,26 @@ import { AccountViewModel } from 'src/app/shared/models/view/account.viewmodel';
 import { ListDataTemplateDirective } from 'src/app/templates/list-data.template';
 
 import { RouterLink } from '@angular/router';
-import { IonRouterLink } from '@ionic/angular/standalone';
+import {
+  IonBadge,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonRouterLink,
+  IonRow,
+  IonSearchbar,
+  IonSkeletonText,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { OpenOrdersControlComponent } from '../../components/open-orders-control/open-orders-control.component';
 
 @Component({
@@ -20,11 +38,27 @@ import { OpenOrdersControlComponent } from '../../components/open-orders-control
   styleUrls: ['./accounts.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
     ScrollingModule,
     OpenOrdersControlComponent,
     RouterLink,
-    IonRouterLink
+    IonRouterLink,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonMenuButton,
+    IonTitle,
+    IonContent,
+    IonSpinner,
+    IonList,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonItem,
+    IonLabel,
+    IonSkeletonText,
+    IonFooter,
+    IonBadge,
+    IonSearchbar,
   ],
 })
 export class AccountsPageComponent extends ListDataTemplateDirective<AccountViewModel> implements OnInit, OnDestroy {

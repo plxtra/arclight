@@ -2,7 +2,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonAccordion, IonAccordionGroup, IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenuButton, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { AssertInternalError } from '@pbkware/js-utils';
 import { DeleteNotificationChannelDataDefinition, DeleteNotificationChannelDataItem, QueryNotificationChannelDataDefinition, QueryNotificationChannelDataItem } from '@plxtra/motif-core';
 import { addIcons } from 'ionicons';
@@ -22,10 +22,26 @@ import { OpenOrdersControlComponent } from '../../../components/open-orders-cont
   styleUrls: ['./notification-detail.page.scss'],
   imports: [
     FormsModule,
-    IonicModule,
     OpenOrdersControlComponent,
     BooleanDisplayComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    IonHeader,
+    IonToolbar,
+    IonButton,
+    IonButtons,
+    IonMenuButton,
+    IonTitle,
+    IonBackButton,
+    IonContent,
+    IonSpinner,
+    IonList,
+    IonListHeader,
+    IonItem,
+    IonLabel,
+    IonCol,
+    IonIcon,
+    IonAccordion,
+    IonAccordionGroup,
   ],
 })
 export class NotificationDetailPageComponent implements OnInit {
