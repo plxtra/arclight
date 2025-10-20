@@ -15,7 +15,6 @@ import {
   IonList,
   IonMenu,
   IonMenuToggle,
-  IonRouterLink,
   IonRouterOutlet,
   IonRow,
   IonSplitPane,
@@ -60,8 +59,7 @@ import { UnifyService } from './services/unify.service';
     IonMenuToggle,
     IonRouterOutlet,
     RouterLink,
-    IonRouterLink
-  ],
+],
 })
 export class AppComponent implements OnInit, AfterViewInit {
   readonly version: string = packageJson.version;

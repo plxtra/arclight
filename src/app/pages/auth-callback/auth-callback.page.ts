@@ -1,7 +1,7 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonIcon, IonSpinner, ViewDidEnter } from '@ionic/angular/standalone';
+import { IonButton, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { getErrorMessage } from '@pbkware/js-utils';
 import { addIcons } from 'ionicons';
 import { refreshCircle } from 'ionicons/icons';
@@ -19,7 +19,7 @@ import { ToastService } from '../../services/toast.service';
     IonSpinner
   ],
 })
-export class AuthCallbackPageComponent implements ViewDidEnter {
+export class AuthCallbackPageComponent implements OnInit {
   private readonly _toastService = inject(ToastService);
   private readonly _openIdService = inject(OpenIdService);
 
@@ -29,7 +29,7 @@ export class AuthCallbackPageComponent implements ViewDidEnter {
     });
   }
 
-  ionViewDidEnter() {
+  ngOnInit() {
     const authenticationPromise = this._openIdService.completeAuthentication();
     authenticationPromise.then(
       () => { /* */ },

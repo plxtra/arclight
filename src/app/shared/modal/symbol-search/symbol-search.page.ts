@@ -1,6 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonButton,
@@ -22,8 +22,7 @@ import {
   IonTitle,
   IonToolbar,
   ModalController,
-  SegmentCustomEvent,
-  ViewDidEnter,
+  SegmentCustomEvent
 } from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { SearchSymbolsDataDefinition, SymbolFieldId, SymbolsDataItem } from '@plxtra/motif-core';
@@ -62,7 +61,7 @@ import { zstring, zSymbolsDataItem } from '../../types/nullable-types';
     IonInput,
   ],
 })
-export class SymbolSearchPageComponent implements OnInit, OnDestroy, ViewDidEnter {
+export class SymbolSearchPageComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("searchFor") searchFor: IonInput;
 
   public searchText: zstring;
@@ -120,12 +119,13 @@ export class SymbolSearchPageComponent implements OnInit, OnDestroy, ViewDidEnte
     this.checkUnsubscribeFromSymbolSearch();
   }
 
-  ionViewDidEnter(): void {
-    // Crashes when using optimisation at the following line:
-    // https://github.com/ionic-team/ionic-framework/blob/4b5753a4ce69da5cadc2b7ff1d2165bc14274372/packages/angular/common/src/utils/proxy.ts#L26
-    // return this.z.runOutsideAngular(() => this.el[methodName].apply(this.el, args));
-    const setFocusPromise = this.searchFor.setFocus();
-    AssertInternalError.throwErrorIfPromiseRejected(setFocusPromise, 'SSPIVDE20112');
+  ngAfterViewInit(): void {
+    // Cannot set focus until ionViewDidEnter lifecycle event however ionViewDidEnter requires ionRouterOutlet
+    // which does not work with OnPush change detection.  So we use AfterViewInit instead and a small timeout.
+    setTimeout(() => {
+      const setFocusPromise = this.searchFor.setFocus();
+      AssertInternalError.throwErrorIfPromiseRejected(setFocusPromise, 'SSPIVDE20112');
+    }, 30);
   }
 
   dismissModal() {

@@ -7,8 +7,8 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch with IDE",
-      "url": "https://localhost:44470", // match port in package.json
+      "name": "Chrome",
+      "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
     }
   ]

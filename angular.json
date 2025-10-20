@@ -178,7 +178,8 @@
         "schematicCollections": [
             "@angular-eslint/schematics",
             "@ionic/angular-toolkit"
-        ]
+        ],
+        "analytics": false
     },
     "schematics": {
         "@ionic/angular-toolkit:component": {
@@ -188,7 +189,8 @@
             "styleext": "scss"
         },
         "@schematics/angular:component": {
-          "type": "component"
+          "type": "component",
+          "changeDetection": "OnPush"
         },
         "@schematics/angular:directive": {
           "type": "directive"
