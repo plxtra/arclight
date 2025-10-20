@@ -21,9 +21,7 @@ import {
   IonLabel,
   IonMenuButton,
   IonReorder,
-  IonReorderGroup,
-  IonRouterLink,
-  IonRow,
+  IonReorderGroup, IonRow,
   IonSelect,
   IonSelectOption,
   IonSkeletonText,
@@ -32,7 +30,7 @@ import {
   IonToolbar,
   ItemReorderEventDetail,
   ModalController,
-  ToastController,
+  ToastController
 } from '@ionic/angular/standalone';
 import { AssertInternalError, Json, JsonElement } from '@pbkware/js-utils';
 import { DataIvemId, DataMarket, ErrorCodeLogger, MarketIvemId, MarketsService, SecurityDataDefinition, SecurityDataItem } from '@plxtra/motif-core';
@@ -61,7 +59,6 @@ import { RecentMovement } from '../../shared/types/shared-types';
     CommonModule,
     FormsModule,
     RouterLink,
-    IonRouterLink,
     OpenOrdersControlComponent,
     IonHeader,
     IonToolbar,

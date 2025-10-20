@@ -20,15 +20,13 @@ import {
   IonItemGroup,
   IonLabel,
   IonList,
-  IonMenuButton,
-  IonRouterLink,
-  IonRow,
+  IonMenuButton, IonRow,
   IonSearchbar,
   IonSelect,
   IonSelectOption,
   IonSpinner,
   IonTitle,
-  IonToolbar,
+  IonToolbar
 } from '@ionic/angular/standalone';
 import { BundledService } from 'src/app/services/bundled.service';
 import { OrderGrouping } from 'src/app/services/personalisation.service';
@@ -45,7 +43,6 @@ import { OpenOrdersControlComponent } from '../../components/open-orders-control
   imports: [
     FormsModule,
     RouterLink,
-    IonRouterLink,
     ScrollingModule,
     OpenOrdersControlComponent,
     IonHeader,

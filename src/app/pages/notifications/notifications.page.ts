@@ -23,13 +23,11 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
-  IonMenuButton,
-  IonRouterLink,
-  IonRow,
+  IonMenuButton, IonRow,
   IonSearchbar,
   IonTitle,
   IonToolbar,
-  ModalController,
+  ModalController
 } from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import { QueryNotificationChannelsDataDefinition, QueryNotificationChannelsDataItem } from '@plxtra/motif-core';
@@ -55,7 +53,6 @@ import { OpenOrdersControlComponent } from '../../components/open-orders-control
   imports: [
     FormsModule,
     RouterLink,
-    IonRouterLink,
     OpenOrdersControlComponent,
     IonHeader,
     IonToolbar,

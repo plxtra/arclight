@@ -12,7 +12,6 @@ import {
   IonIcon,
   IonImg,
   IonLabel,
-  IonRouterLink,
   IonRow,
   IonText,
 } from '@ionic/angular/standalone';
@@ -32,7 +31,6 @@ import { UnifyService } from '../../services/unify.service';
   imports: [
     FormsModule,
     RouterLink,
-    IonRouterLink,
     IonContent,
     IonGrid,
     IonRow,

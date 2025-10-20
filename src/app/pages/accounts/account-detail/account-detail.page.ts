@@ -2,7 +2,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonRouterLink, IonRow, IonSkeletonText, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonRow, IonSkeletonText, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { AssertInternalError, MultiEvent } from '@pbkware/js-utils';
 import {
   BrokerageAccountBalancesDataDefinition,
@@ -34,7 +34,6 @@ import { OpenOrdersControlComponent } from '../../../components/open-orders-cont
   imports: [
     FormsModule,
     RouterLink,
-    IonRouterLink,
     OpenOrdersControlComponent,
     IonHeader,
     IonButtons,

@@ -17,13 +17,11 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
-  IonMenuButton,
-  IonRouterLink,
-  IonSearchbar,
+  IonMenuButton, IonSearchbar,
   IonSpinner,
   IonTitle,
   IonToolbar,
-  ModalController,
+  ModalController
 } from '@ionic/angular/standalone';
 import { AssertInternalError, Integer, MultiEvent, UsableListChangeTypeId } from '@pbkware/js-utils';
 import { Feed, FeedStatusId, ScansService } from '@plxtra/motif-core';
@@ -48,7 +46,6 @@ import { FeedsService } from '../../services/feeds.service';
   imports: [
     FormsModule,
     RouterLink,
-    IonRouterLink,
     OpenOrdersControlComponent,
     IonHeader,
     IonContent,
